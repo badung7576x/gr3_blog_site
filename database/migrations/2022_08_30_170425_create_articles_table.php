@@ -29,6 +29,7 @@ return new class extends Migration
             $table->bigInteger('created_by')->nullable();    
             $table->bigInteger('review_by')->nullable();    
             $table->integer('review_status')->nullable();    
+            $table->boolean('is_published')->default(false);    
             $table->softDeletes();
             $table->timestamps();
         });

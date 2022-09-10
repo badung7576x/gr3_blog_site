@@ -13,9 +13,14 @@ class UpdateArticleRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, mixed>
+     */
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,7 +29,28 @@ class UpdateArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'slug' => 'required|string|unique:articles,slug,' . $this->id,
+            'title' => 'required|string|max:255',
+            'session_id' => 'required|string',
+            'image' => 'nullable',
+            'summary' => 'required|string',
+            'content' => 'required|string',
+            'publish_schedule' => 'required|date',
+            'tags' => 'nullable|string'
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'slug' => 'đường dẫn bài viết',
+            'title' => 'tiêu đề bài viết',
+            'session_id' => 'phiên đăng bài',
+            'image' => 'hình ảnh thumbnail',
+            'summary' => 'nội dung tóm tắt',
+            'content' => 'nội dung bài viết',
+            'publish_schedule' => 'thời gian đăng bài',
+            'tags' => 'các thẻ tags'
         ];
     }
 }

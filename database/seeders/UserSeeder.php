@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'bio' => 'No description',
             'profile_image' => '',
-            'password' => Hash::make('abc123'), 
+            'password' => 'abc123', 
             'points' => 0,
             'status' => 1
         ]);
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
             'email' => 'reviewer01@gmail.com',
             'bio' => 'No description',
             'profile_image' => '',
-            'password' => Hash::make('abc123'), 
+            'password' => 'abc123', 
             'points' => 0,
             'status' => 1
         ]);
@@ -49,7 +49,7 @@ class UserSeeder extends Seeder
             'email' => 'user01@gmail.com',
             'bio' => 'No description',
             'profile_image' => '',
-            'password' => Hash::make('abc123'), 
+            'password' => 'abc123', 
             'points' => 0,
             'status' => 1
         ]);

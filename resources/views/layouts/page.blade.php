@@ -67,7 +67,7 @@
           <div class="dropdown d-inline-block ms-1">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="sidebar-themes-dropdown"
               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="far fa-user"></i> Đặng Bá Dũng
+              <i class="far fa-user"></i> ---
             </button>
             <div class="dropdown-menu dropdown-menu-end fs-sm smini-hide border-0"
               aria-labelledby="sidebar-themes-dropdown">
@@ -102,12 +102,6 @@
         <div class="content-side">
           <ul class="nav-main">
             <li class="nav-main-item">
-              <a class="nav-main-link active" href="gs_landing.html">
-                <i class="nav-main-link-icon si si-home"></i>
-                <span class="nav-main-link-name">Trang chủ</span>
-              </a>
-            </li>
-            <li class="nav-main-item">
               <a class="nav-main-link" href="{{ route('article.list') }}">
                 <i class="nav-main-link-icon si si-rocket"></i>
                 <span class="nav-main-link-name">Quản lý bài viết</span>
@@ -135,7 +129,7 @@
         <!-- Left Section -->
         <div class="d-flex align-items-center">
           <!-- Logo -->
-          <a class="fw-semibold fs-5 tracking-wider text-dual me-3" href="index.html">
+          <a class="fw-semibold fs-5 tracking-wider text-dual me-3" href="{{ route('article.home') }}">
             Blog
           </a>
           <!-- END Logo -->
@@ -148,12 +142,6 @@
           @auth
           <div class="d-none d-lg-block">
             <ul class="nav-main nav-main-horizontal nav-main-hover">
-              <li class="nav-main-item">
-                <a class="nav-main-link active" href="gs_landing.html">
-                  <i class="nav-main-link-icon si si-home"></i>
-                  <span class="nav-main-link-name">Trang chủ</span>
-                </a>
-              </li>
               <li class="nav-main-item">
                 <a class="nav-main-link" href="{{ route('article.list') }}">
                   <i class="nav-main-link-icon si si-list"></i>
@@ -223,7 +211,7 @@
               <button type="button" class="btn btn-alt-danger" data-toggle="layout" data-action="header_search_off">
                 <i class="fa fa-fw fa-times-circle"></i>
               </button>
-              <input type="text" class="form-control" placeholder="Search or hit ESC.." id="page-header-search-input"
+              <input type="text" class="form-control" placeholder="Tìm kiếm bài viết" id="page-header-search-input"
                 name="page-header-search-input">
             </div>
           </form>
@@ -291,12 +279,11 @@
               San Francisco, CA 85214<br>
               <abbr title="Phone">P:</abbr> (123) 456-7890
             </div> --}}
-            <h3>Subscribe to our news</h3>
+            <h3>Đăng ký để nhận bài viết mới</h3>
             <form>
               <div class="input-group">
-                <input type="email" class="form-control form-control-alt" id="dm-gs-subscribe-email"
-                  name="dm-gs-subscribe-email" placeholder="Your email..">
-                <button type="submit" class="btn btn-alt-primary">Subscribe</button>
+                <input type="email" class="form-control form-control-alt" name="subcribe_email" placeholder="Nhập email của bạn">
+                <button type="submit" class="btn btn-alt-primary">Đăng ký</button>
               </div>
             </form>
           </div>
@@ -306,11 +293,10 @@
         <!-- Footer Copyright -->
         <div class="row fs-sm pt-4">
           <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
-            Crafted with <i class="fa fa-heart text-danger"></i> by <a class="fw-semibold"
-              href="https://1.envato.market/ydb" target="_blank">pixelcave</a>
+            Phát triển bởi <a class="fw-semibold" href="https://github.com/badung7576x" target="_blank">Đăng Bá Dũng</a>
           </div>
           <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
-            <a class="fw-semibold" href="https://1.envato.market/AVD6j" target="_blank">OneUI 5.0</a> &copy; <span
+            <a class="fw-semibold" href="https://1.envato.market/AVD6j" target="_blank">Blog CMS</a> &copy; <span
               data-toggle="year-copy"></span>
           </div>
         </div>

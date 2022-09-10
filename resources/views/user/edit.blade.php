@@ -4,8 +4,9 @@
 
 @section('content')
 <div class="content" style="max-width: 100%">
-  <form action="{{ route('article.update') }}" method="POST" enctype="multipart/form-data">
+  <form action="{{ route('article.update', ['article' => $article]) }}" method="POST" enctype="multipart/form-data">
     @csrf
+    <input type="hidden" name="id" value="{{ $article->id }}">
     <div class="row">
       <div class="col-3"></div>
       <div class="col-6">
@@ -61,7 +62,7 @@
                   <label class="form-label">Hình ảnh thumbnail</label>
                   <input class="form-control mb-4" type="file" id="imageUpload" accept=".png, .jpg, .jpeg" name="image">
                   <div class="avatar-preview" style="width: 100%">
-                    <img id="imagePreview" src="{{ $article->header_image ?? '' }}" style="max-width:100%;
+                    <img id="imagePreview" src="{{ $article->header_thumbnail ?? '' }}" style="max-width:100%;
                     max-height:100%;">
                     </img>
                   </div>
@@ -72,7 +73,7 @@
                     <option value=""></option>
                     @foreach ($categories as $cate)
                       @foreach ($cate->sessions as $session)
-                      <option value="{{ $cate->id . '_' . $session->id }}" @selected(old('session_id', $article->category_id . . '_' . $article->session_id) == $cate->id . '_' . $session->id)>
+                      <option value="{{ $cate->id . '_' . $session->id }}" @selected(old('session_id', $article->category_id . '_' . $article->session_id) == $cate->id . '_' . $session->id)>
                         {{ $cate->name . '_' . $session->session_name }}</option>
                       @endforeach
                     @endforeach
@@ -84,7 +85,7 @@
                 <div class="row mb-4">
                   <div class="col-12">
                     <label class="form-label">Tags</label>
-                    <input name="tags" class="form-control @error('tags') is-invalid @enderror" type="text" placeholder="tag1, tag2, tag3">
+                    <input name="tags" class="form-control @error('tags') is-invalid @enderror" type="text" placeholder="tag1, tag2, tag3" value={{ old('tags', $article->tags) }}>
                     @error('tags')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -94,7 +95,7 @@
                   <div class="col-12">
                     <label class="form-label">Thời gian đăng bài</label>
                     <input type="text" class="js-flatpickr form-control @error('publish_schedule') is-invalid @enderror"
-                      name="publish_schedule" data-enable-time="true" data-time_24hr="true" value="{{ old('publish_schedule', . '_' . $article->publish_schedule) }}">
+                      name="publish_schedule" data-enable-time="true" data-time_24hr="true" value="{{ old('publish_schedule', $article->publish_schedule) }}">
                     @error('publish_schedule')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror

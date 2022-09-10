@@ -24,12 +24,12 @@
             <h1 class="h2 mb-2">
               {{ $article->title }}
             </h1>
-            <span class="d-inline-block py-2 px-2 bg-body fw-medium rounded">
+            {{-- <span class="d-inline-block py-2 px-2 bg-body fw-medium rounded">
               {{ $article->publish_time ?? now()->format('H:m d-m-Y') }} &bull; <span>{{ round(strlen($article->content) / 350) }} phút đọc</span>
-            </span>
+            </span> --}}
           </div>
           <div class="fw-normal mb-0">
-            {{ $article->summary }}
+            {!! $article->summary !!}
           </div>
           <div class="mb-3" style="width: 100%; height: 20px; border-bottom: 1px solid black; text-align: center">
             <span style="font-size: 20px; background-color: #FFF; padding: 0 10px;position: relative;top: 6px">
@@ -40,18 +40,20 @@
             <div class="col-sm-12">
               <!-- Story -->
               <article class="story">
-                {{ $article->content }}
+                {!! $article->content !!}
               </article>
               <!-- END Story -->
               <hr>
               <div class="row justify-content-center">
                 <div class="col-sm-12">
                   <b>TAGS:</b>
-                  @foreach ($article->listTags as $tag)
+                  @forelse ($article->listTags as $tag)
                   <span class="d-inline-block px-2 py-1 bg-body fw-medium rounded">
                     #{{ $tag }}
                   </span>
-                  @endforeach
+                  @empty
+                    <span></span> 
+                  @endforelse
                 </div>
               </div>
               <!-- Actions -->

@@ -7,10 +7,10 @@
 <div class="background">
   <div class="content content-full overflow-hidden pt-7 pb-6 text-center ">
     <h1 class="h2 mb-2 text-white">
-      The latest stories only for you.
+      Chia sẻ kiến thức là cách để bạn trở thành bất tử.
     </h1>
     <h2 class="h4 fw-normal text-white-75 mb-0">
-      Feel free to explore and read.
+      <i>- Đức Đạt Lai Lạt Ma -</i> 
     </h2>
   </div>
 </div>

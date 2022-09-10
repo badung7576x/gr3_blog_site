@@ -12,8 +12,6 @@
         <a class="btn-block-option me-2" href="{{ route('article.create') }}">
           <i class="si si-plus me-1"></i> Tạo bài viết mới
         </a>
-        {{-- <button type="button" class="btn-block-option" data-toggle="block-option" data-action="fullscreen_toggle"><i
-            class="si si-size-fullscreen"></i></button> --}}
       </div>
     </div>
     <div class="block-content">
@@ -22,9 +20,9 @@
         <thead class="border-bottom">
           <tr>
             <th class="text-center" style="width: 50px;">STT</th>
-            <th style="width: 450px;">Tiêu đề</th>
-            <th class="d-none d-md-table-cell text-center" style="width: 100px;">Trạng thái</th>
-            <th class="d-none d-md-table-cell text-center" style="width: 100px;">Thời gian đăng</th>
+            <th style="width: 450px;">Tiêu đề bài viết</th>
+            <th class="d-none d-md-table-cell text-center" style="width: 100px;">Trạng thái <br>bài viết</th>
+            <th class="d-none d-md-table-cell text-center" style="width: 100px;">Trạng thái <br>đánh giá</th>
             <th class="d-none d-md-table-cell text-center" style="width: 100px;">Thao tác</th>
           </tr>
         </thead>
@@ -33,31 +31,30 @@
           <tr>
             <td class="text-center">{{ $loop->iteration }}</td>
             <td>
-              <a class="fw-semibold" href="{{ route('article.detail', ['article' => $article]) }}">{{ $article->title }}</a>
+              <a class="fw-semibold" href="{{ route('article.preview', ['article' => $article]) }}">{{ $article->title }}</a>
               <div class="fs-sm text-muted mt-1">
-                19:00 2/9/2022
+                <span class="badge bg-info">{{ $article->category->name }}</span> tạo lúc <span>{{ $article->created_at }}</span>
               </div>
             </td>
             <td class="d-none d-md-table-cell text-center">
-              <span class="badge bg-success">{{ config('data.article_status')[$article->status] }}</span>
+              <span class="badge bg-primary">{{ config('data.article_status')[$article->status] }}</span>
             </td>
             <td class="d-none d-md-table-cell text-center">
-              <span>{{ $article->publish_schedule }}</span>
+              <span class="badge bg-primary">{{ config('data.review_status')[$article->review_status] ?? '-' }}</span>
             </td>
             <td class="d-none d-md-table-cell text-center">
               <div class="btn-group me-2 mb-2">
-                <button type="button" class="btn btn-outline-secondary">
+                <a class="btn btn-outline-secondary" href="{{ route('article.edit', ['article' => $article]) }}">
                   <i class="fa fa-fw fa-edit"></i>
-                </button>
-                <button type="button" class="btn btn-outline-secondary" 
+                </a>
+                <form method="POST" action="{{ route('article.delete', ['article' => $article]) }}" id="delete_form_{{ $article->id }}">
+                  @csrf
+                </form>
+                <button type="button" class="btn btn-outline-secondary delete-btn"
                   data-id="{{ $article->id }}" data-name="{{ $article->title }}" data-bs-toggle="tooltip" title="{{ __('Xóa') }}">
                   <i class="fa fa-fw fa-trash"></i>
                 </button>
               </div>
-              <form method="POST" action="{{ route('article.delete', ['article' => $article->id]) }}" id="delete_form_{{ $article->id }}">
-                @csrf
-                @method('delete')
-              </form>
             </td>
           </tr>
           @empty
@@ -85,7 +82,7 @@
       title = $(this).data("name");
       toast.fire({
         title: '{{ __('Xác nhận') }}',
-        text: 'Bạn có chắc chắn muốn xóa bài viết ' + title + '?',
+        text: 'Bạn có chắc chắn muốn xóa bài viết "' + title + '" không ?',
         icon: 'warning',
         showCancelButton: true,
         customClass: {

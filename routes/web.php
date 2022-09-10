@@ -31,11 +31,12 @@ Route::group([
 
 Route::group([
     'prefix' => 'management',
-    'namespace' => 'App\Http\Controllers', 'as' => 'admin.',
+    'namespace' => 'App\Http\Controllers\Admin', 'as' => 'admin.',
     'middleware' => 'auth'
 ], function () {
     Route::get('', 'DashboardController@index')->name('dashboard.index');
-
+    Route::resource('articles', 'ArticleController')->names('article');
+    Route::resource('users', 'UserController')->names('user');
 });
 
 
@@ -43,8 +44,9 @@ Route::group([
     'prefix' => '',
     'namespace' => 'App\Http\Controllers', 'as' => 'article.',
 ], function () {
-    Route::get('', 'ArticlesController@home')->name('home');
-    Route::get('/article/{article:slug}', 'ArticlesController@detail')->name('detail');
+    Route::get('', 'ArticleController@home')->name('home');
+    Route::get('/article/{article:slug}', 'ArticleController@detail')->name('detail');
+    Route::get('/preview/{article:slug}', 'ArticleController@preview')->name('preview');
 });
 
 Route::group([
@@ -52,10 +54,10 @@ Route::group([
     'namespace' => 'App\Http\Controllers', 'as' => 'article.',
     'middleware' => 'auth'
 ], function () {
-    Route::get('/articles', 'ArticlesController@list')->name('list');
-    Route::get('/article/create', 'ArticlesController@create')->name('create');
-    Route::post('/article/create', 'ArticlesController@store')->name('store');
-    Route::get('/article/{article}/edit', 'ArticlesController@edit')->name('store');
-    Route::post('/article/{article}/edit', 'ArticlesController@update')->name('update');
-    Route::post('/article/{article}/delete', 'ArticlesController@destroy')->name('delete');
+    Route::get('/articles', 'ArticleController@list')->name('list');
+    Route::get('/articles/create', 'ArticleController@create')->name('create');
+    Route::post('/articles/create', 'ArticleController@store')->name('store');
+    Route::get('/articles/{article}/edit', 'ArticleController@edit')->name('edit');
+    Route::post('/articles/{article}/edit', 'ArticleController@update')->name('update');
+    Route::post('/articles/{article}/delete', 'ArticleController@destroy')->name('delete');
 });

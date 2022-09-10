@@ -19,7 +19,7 @@ class Article extends Model
         'slug', 'title', 'category_id', 'session_id',
         'header_thumbnail', 'summary', 'content',
         'publish_schedule', 'publish_time', 'tags', 'status',
-        'created_by', 'reviewer_by', 'review_status'
+        'created_by', 'review_by', 'review_status', 'is_published'
     ];
 
     public static function boot()
@@ -70,7 +70,7 @@ class Article extends Model
     {
         return Attribute::make(
             get: function ($value, $attributes) {
-                Carbon::parse($value)->format('H:m d-m-Y');
+                return Carbon::parse($value)->format('H:i d/m/Y');
             },
         );
     }

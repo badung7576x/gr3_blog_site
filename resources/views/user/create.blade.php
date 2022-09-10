@@ -25,7 +25,7 @@
                   @enderror
                 </div>
                 <div class="mb-4">
-                  <label class="form-label">Tóm tắt <span class="text-danger">*</span></label>
+                  <label class="form-label">Nội dung tóm tắt <span class="text-danger">*</span></label>
                   <textarea name="summary"
                     class="ckeditor1 form-control @error('summary') is-invalid @enderror">{{ old('summary', '') }}</textarea>
                   @error('summary')

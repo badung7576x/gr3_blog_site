@@ -24,7 +24,7 @@ class CreateArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'slug' => 'required|string',
+            'slug' => 'required|string|unique:articles,slug',
             'title' => 'required|string|max:255',
             'session_id' => 'required|string',
             'image' => 'nullable',
@@ -42,7 +42,7 @@ class CreateArticleRequest extends FormRequest
             'title' => 'tiêu đề bài viết',
             'session_id' => 'phiên đăng bài',
             'image' => 'hình ảnh thumbnail',
-            'summary' => 'tóm tắt nội dung',
+            'summary' => 'nội dung tóm tắt',
             'content' => 'nội dung bài viết',
             'publish_schedule' => 'thời gian đăng bài',
             'tags' => 'các thẻ tags'

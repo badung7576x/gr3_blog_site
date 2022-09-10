@@ -87,22 +87,54 @@
         <!-- Side Navigation -->
         <div class="content-side">
           <ul class="nav-main">
-            {{-- @can('is_admin') --}}
+            @can('is_admin')
               <li class="nav-main-item">
-                <a class="nav-main-link {{ request()->routeIs('admin.teacher*') ? 'active' : '' }}" href="{{ route('admin.dashboard.index') }}">
-                  <i class="nav-main-link-icon fa fa-users"></i>
+                <a class="nav-main-link {{ request()->routeIs('admin.dashboard*') ? 'active' : '' }}" href="{{ route('admin.dashboard.index') }}">
+                  <i class="nav-main-link-icon fa fa-home"></i>
                   <span class="nav-main-link-name">Trang chủ</span>
                 </a>
               </li>
-            {{-- @endcan
-            @can('is_teacher')
+              <li class="nav-main-item {{ request()->routeIs('admin.article*') ? 'open' : '' }}">
+                <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+                  <i class="nav-main-link-icon fa fa-newspaper"></i>
+                  <span class="nav-main-link-name">Quản lý bài viết</span>
+                </a>
+                <ul class="nav-main-submenu">
+                  <li class="nav-main-item">
+                    <a class="nav-main-link {{ request()->routeIs('admin.article.index') ? 'active' : '' }}" href="{{ route('admin.article.index') }}">
+                      <span class="nav-main-link-name">Danh sách bài viết</span>
+                    </a>
+                  </li>
+                  <li class="nav-main-item">
+                    <a class="nav-main-link {{ request()->routeIs('admin.article.index') ? 'active' : '' }}" href="{{ route('admin.article.index') }}">
+                      <span class="nav-main-link-name">Phân công đánh giá</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-main-item {{ request()->routeIs('admin.user*') ? 'open' : '' }}">
+                <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+                  <i class="nav-main-link-icon fa fa-users"></i>
+                  <span class="nav-main-link-name">Quản lý người dùng</span>
+                </a>
+                <ul class="nav-main-submenu">
+                  <li class="nav-main-item">
+                    <a class="nav-main-link {{ request()->routeIs('admin.user*') ? 'active' : '' }}" href="{{ route('admin.user.index') }}">
+                      <span class="nav-main-link-name">Danh sách người dùng</span>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </li>
+            @endcan
+            @can('is_reviewer')
               <li class="nav-main-item">
-                <a class="nav-main-link {{ request()->routeIs('admin.exam-set*') ? 'active' : '' }}" href="{{ route('admin.exam-set.index') }}">
+                <a class="nav-main-link {{ request()->routeIs('admin.dashboard*') ? 'active' : '' }}" href="{{ route('admin.dashboard.index') }}">
                   <i class="nav-main-link-icon fa fa-layer-group"></i>
                   <span class="nav-main-link-name">Danh sách đề thi</span>
                 </a>
               </li>
-            @endcan --}}
+            @endcan
           </ul>
         </div>
         <!-- END Side Navigation -->
