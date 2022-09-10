@@ -56,7 +56,7 @@
             <i class="fa fa-circle-notch text-primary"></i>
           </span>
           <span class="smini-hide fs-5 tracking-wider">
-            One<span class="fw-normal">UI</span>
+            Blog<span class="fw-normal"></span>
           </span>
         </a>
         <!-- END Logo -->
@@ -67,7 +67,7 @@
           <div class="dropdown d-inline-block ms-1">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="sidebar-themes-dropdown"
               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="far fa-circle"></i>
+              <i class="far fa-user"></i> Đặng Bá Dũng
             </button>
             <div class="dropdown-menu dropdown-menu-end fs-sm smini-hide border-0"
               aria-labelledby="sidebar-themes-dropdown">
@@ -75,33 +75,8 @@
               <!-- Layout API, functionality initialized in Template._uiHandleTheme() -->
               <a class="dropdown-item d-flex align-items-center justify-content-between fw-medium" data-toggle="theme"
                 data-theme="default" href="#">
-                <span>Default</span>
+                <span>Danh sách bài viết</span>
                 <i class="fa fa-circle text-default"></i>
-              </a>
-              <a class="dropdown-item d-flex align-items-center justify-content-between fw-medium" data-toggle="theme"
-                data-theme="assets/css/themes/amethyst.min.css" href="#">
-                <span>Amethyst</span>
-                <i class="fa fa-circle text-amethyst"></i>
-              </a>
-              <a class="dropdown-item d-flex align-items-center justify-content-between fw-medium" data-toggle="theme"
-                data-theme="assets/css/themes/city.min.css" href="#">
-                <span>City</span>
-                <i class="fa fa-circle text-city"></i>
-              </a>
-              <a class="dropdown-item d-flex align-items-center justify-content-between fw-medium" data-toggle="theme"
-                data-theme="assets/css/themes/flat.min.css" href="#">
-                <span>Flat</span>
-                <i class="fa fa-circle text-flat"></i>
-              </a>
-              <a class="dropdown-item d-flex align-items-center justify-content-between fw-medium" data-toggle="theme"
-                data-theme="assets/css/themes/modern.min.css" href="#">
-                <span>Modern</span>
-                <i class="fa fa-circle text-modern"></i>
-              </a>
-              <a class="dropdown-item d-flex align-items-center justify-content-between fw-medium" data-toggle="theme"
-                data-theme="assets/css/themes/smooth.min.css" href="#">
-                <span>Smooth</span>
-                <i class="fa fa-circle text-smooth"></i>
               </a>
               <!-- END Color Themes -->
             </div>
@@ -123,6 +98,7 @@
       <!-- Sidebar Scrolling -->
       <div class="js-sidebar-scroll">
         <!-- Side Navigation -->
+        @auth
         <div class="content-side">
           <ul class="nav-main">
             <li class="nav-main-item">
@@ -132,19 +108,20 @@
               </a>
             </li>
             <li class="nav-main-item">
-              <a class="nav-main-link" href="javascript:void(0)">
+              <a class="nav-main-link" href="{{ route('article.list') }}">
                 <i class="nav-main-link-icon si si-rocket"></i>
                 <span class="nav-main-link-name">Quản lý bài viết</span>
               </a>
             </li>
             <li class="nav-main-item">
-              <a class="nav-main-link" href="javascript:void(0)">
-                <i class="nav-main-link-icon si si-wallet"></i>
+              <a class="nav-main-link" href="{{ route('article.create') }}">
+                <i class="nav-main-link-icon si si-plus"></i>
                 <span class="nav-main-link-name">Tạo bài viết mới</span>
               </a>
             </li>
           </ul>
         </div>
+        @endauth
         <!-- END Side Navigation -->
       </div>
       <!-- END Sidebar Scrolling -->
@@ -168,6 +145,7 @@
         <!-- Right Section -->
         <div class="d-flex align-items-center">
           <!-- Menu -->
+          @auth
           <div class="d-none d-lg-block">
             <ul class="nav-main nav-main-horizontal nav-main-hover">
               <li class="nav-main-item">
@@ -177,65 +155,51 @@
                 </a>
               </li>
               <li class="nav-main-item">
-                <a class="nav-main-link" href="javascript:void(0)">
+                <a class="nav-main-link" href="{{ route('article.list') }}">
                   <i class="nav-main-link-icon si si-list"></i>
                   <span class="nav-main-link-name">Quản lý bài viết</span>
                 </a>
               </li>
               <li class="nav-main-item">
-                <a class="nav-main-link" href="javascript:void(0)">
+                <a class="nav-main-link" href="{{ route('article.create') }}">
                   <i class="nav-main-link-icon si si-plus"></i>
                   <span class="nav-main-link-name">Tạo bài viết mới</span>
                 </a>
               </li>
-              <li class="nav-main-heading">Extra</li>
+              <li class="nav-main-heading">{{ auth()->user()->fullname }}</li>
               <li class="nav-main-item">
                 <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                   aria-expanded="false" href="#">
-                  <i class="nav-main-link-icon far fa-circle"></i>
+                  {{ auth()->user()->fullname }}
                 </a>
                 <ul class="nav-main-submenu nav-main-submenu-right">
                   <li class="nav-main-item">
-                    <a class="nav-main-link" data-toggle="theme" data-theme="default" href="#">
-                      <i class="nav-main-link-icon fa fa-square text-default"></i>
-                      <span class="nav-main-link-name">Default</span>
+                    <a class="nav-main-link" data-toggle="theme" data-theme="default" href="#"
+                      onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                      <i class="nav-main-link-icon fa fa-sign-out-alt text-default"></i>
+                      <span class="nav-main-link-name">Logout</span>
                     </a>
-                  </li>
-                  <li class="nav-main-item">
-                    <a class="nav-main-link" data-toggle="theme" data-theme="assets/css/themes/amethyst.min.css"
-                      href="#">
-                      <i class="nav-main-link-icon fa fa-square text-amethyst"></i>
-                      <span class="nav-main-link-name">Amethyst</span>
-                    </a>
-                  </li>
-                  <li class="nav-main-item">
-                    <a class="nav-main-link" data-toggle="theme" data-theme="assets/css/themes/city.min.css" href="#">
-                      <i class="nav-main-link-icon fa fa-square text-city"></i>
-                      <span class="nav-main-link-name">City</span>
-                    </a>
-                  </li>
-                  <li class="nav-main-item">
-                    <a class="nav-main-link" data-toggle="theme" data-theme="assets/css/themes/flat.min.css" href="#">
-                      <i class="nav-main-link-icon fa fa-square text-flat"></i>
-                      <span class="nav-main-link-name">Flat</span>
-                    </a>
-                  </li>
-                  <li class="nav-main-item">
-                    <a class="nav-main-link" data-toggle="theme" data-theme="assets/css/themes/modern.min.css" href="#">
-                      <i class="nav-main-link-icon fa fa-square text-modern"></i>
-                      <span class="nav-main-link-name">Modern</span>
-                    </a>
-                  </li>
-                  <li class="nav-main-item">
-                    <a class="nav-main-link" data-toggle="theme" data-theme="assets/css/themes/smooth.min.css" href="#">
-                      <i class="nav-main-link-icon fa fa-square text-smooth"></i>
-                      <span class="nav-main-link-name">Smooth</span>
-                    </a>
+                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
+                      @csrf
+                    </form>
                   </li>
                 </ul>
               </li>
             </ul>
           </div>
+          @endauth
+          @if(!auth()->check())
+          <div class="d-none d-lg-block">
+            <ul class="nav-main nav-main-horizontal nav-main-hover">
+              <li class="nav-main-item">
+                <a class="nav-main-link active" href="{{ route('admin.login') }}">
+                  <i class="nav-main-link-icon fa fa-sign-in-alt"></i>
+                  <span class="nav-main-link-name">Đăng nhập</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          @endauth
           <!-- END Menu -->
 
           <!-- Toggle Sidebar -->
@@ -321,12 +285,12 @@
             </ul>
           </div>
           <div class="col-6 col-md-4">
-            <h3>Company</h3>
+            {{-- <h3>Company</h3>
             <div class="fs-sm push">
               1080 Sunshine Valley, Suite 2563<br>
               San Francisco, CA 85214<br>
               <abbr title="Phone">P:</abbr> (123) 456-7890
-            </div>
+            </div> --}}
             <h3>Subscribe to our news</h3>
             <form>
               <div class="input-group">

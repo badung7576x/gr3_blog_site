@@ -137,7 +137,7 @@
         <!-- Right Section -->
         <div class="d-flex align-items-center">
 
-          <div class="dropdown d-inline-block ms-2">
+          {{-- <div class="dropdown d-inline-block ms-2">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-fw fa-bell"></i>
               <span class="text-danger">1</span>
@@ -182,7 +182,7 @@
                 </li>
               </ul>
             </div>
-          </div>
+          </div> --}}
 
           <!-- User Dropdown -->
           <div class="dropdown d-inline-block ms-2">
@@ -197,7 +197,6 @@
               <div class="p-3 text-center bg-body-light border-bottom rounded-top">
                 <img class="img-avatar img-avatar48 img-avatar-thumb" src="{{ $avatar }}" alt="">
                 <p class="mt-2 mb-0 fw-medium">{{ auth()->user()->fullname }}</p>
-                <p class="mb-0 text-muted fs-sm fw-medium"> {{ auth()->user()->title }} </p>
               </div>
               <div class="p-2">
                 <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">
@@ -239,7 +238,7 @@
             Được phát triển bởi <a class="fw-semibold" href="#" target="_blank">Đặng Bá Dũng - 20176731</a>
           </div>
           <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
-            <a class="fw-semibold" href="javascript:void(0)"><strong>{{ config('setting.app_name') }}</strong></a> &copy; <span data-toggle="year-copy"></span>
+            <a class="fw-semibold" href="javascript:void(0)"><strong>Blog CMS</strong></a> &copy; <span data-toggle="year-copy"></span>
           </div>
         </div>
       </div>

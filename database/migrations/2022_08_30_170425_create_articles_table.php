@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->string('url')->nullable();
+            $table->string('slug')->nullable();
             $table->string('title');
             $table->bigInteger('category_id')->nullable();
             $table->bigInteger('session_id')->nullable();
@@ -25,7 +25,11 @@ return new class extends Migration
             $table->dateTime('publish_schedule')->nullable();
             $table->dateTime('publish_time')->nullable();
             $table->string('tags')->nullable();
-            $table->string('status')->nullable();    
+            $table->integer('status');   
+            $table->bigInteger('created_by')->nullable();    
+            $table->bigInteger('review_by')->nullable();    
+            $table->integer('review_status')->nullable();    
+            $table->softDeletes();
             $table->timestamps();
         });
     }

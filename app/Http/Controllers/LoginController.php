@@ -51,15 +51,15 @@ class LoginController extends Controller
     protected function redirectAfterLogin()
     {
         $user = auth()->user();
-        switch($user->role) {
+        switch($user->group_id) {
             case ROLE_ADMIN:
-                // return route('admin.dashboard.index');
+                return route('admin.dashboard.index');
             case ROLE_REVIEWER:
-                // return route('admin.dashboard.index');
+                return route('admin.dashboard.index');
             case ROLE_USER:
                 return route('article.home');
             default:
-                return route('admin.home');
+                return route('admin.dashboard.index');
         }
     }
 }

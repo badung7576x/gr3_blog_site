@@ -4,16 +4,13 @@
 
 @section('content')
 <!-- Hero Content -->
-<div class="bg-primary-dark">
-  <div class="content content-full overflow-hidden pt-7 pb-6 text-center background">
-    <h1 class="h2 mb-2 text-white">
-      Tiêu đề bài viết ở đây
-    </h1>
-    <h2 class="h4 fw-normal text-white-75 mb-0">
-      Nội dung tóm tắt ở đây Nội dung tóm tắt ở đây Nội dung tóm tắt ở đây Nội dung tóm tắt ở đây Nội dung tóm tắt ở đây
-    </h2>
+@if($article->header_thumbnail)
+<div class="bg-info-light">
+  <div class="content content-full overflow-hidden pt-7 pb-6 text-center background"
+    style="background-image: url({{ $article->header_thumbnail }})">
   </div>
 </div>
+@endif
 <!-- END Hero Content -->
 
 <!-- Page Content -->
@@ -23,118 +20,40 @@
       <!-- Page Content -->
       <div class="bg-body-extra-light">
         <div class="content content-boxed">
-          <div class="text-center fs-sm push">
-            <span class="d-inline-block py-2 px-4 bg-body fw-medium rounded">
-              <a class="link-effect" href="be_pages_generic_profile.html">John Doe</a> on July 16, 2019 &bull; <span>5
-                min</span>
+          <div class="fs-sm push text-center">
+            <h1 class="h2 mb-2">
+              {{ $article->title }}
+            </h1>
+            <span class="d-inline-block py-2 px-2 bg-body fw-medium rounded">
+              {{ $article->publish_time ?? now()->format('H:m d-m-Y') }} &bull; <span>{{ round(strlen($article->content) / 350) }} phút đọc</span>
+            </span>
+          </div>
+          <div class="fw-normal mb-0">
+            {{ $article->summary }}
+          </div>
+          <div class="mb-3" style="width: 100%; height: 20px; border-bottom: 1px solid black; text-align: center">
+            <span style="font-size: 20px; background-color: #FFF; padding: 0 10px;position: relative;top: 6px">
+              ***
             </span>
           </div>
           <div class="row justify-content-center">
             <div class="col-sm-12">
               <!-- Story -->
               <article class="story">
-                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna
-                  accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate
-                  bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl
-                  nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque
-                  commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor
-                  enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum
-                  lorem, inceptos nibh orci.</p>
-
-                <!-- Magnific Popup (.js-gallery class is initialized in Helpers.jqMagnific()) -->
-                <!-- For more info and examples you can check out http://dimsemenov.com/plugins/magnific-popup/ -->
-                <div class="row g-sm items-push js-gallery push img-fluid-100">
-                  <div class="col-6 animated fadeIn">
-                    <a class="img-link img-link-simple img-link-zoom-in img-lightbox"
-                      href="assets/media/photos/photo19@2x.jpg">
-                      <img class="img-fluid" src="assets/media/photos/photo19.jpg" alt="">
-                    </a>
-                  </div>
-                  <div class="col-6 animated fadeIn">
-                    <a class="img-link img-link-simple img-link-zoom-in img-lightbox"
-                      href="assets/media/photos/photo12@2x.jpg">
-                      <img class="img-fluid" src="assets/media/photos/photo12.jpg" alt="">
-                    </a>
-                  </div>
-                </div>
-                <!-- END Gallery -->
-
-                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna
-                  accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate
-                  bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl
-                  nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque
-                  commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor
-                  enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum
-                  lorem, inceptos nibh orci.</p>
-
-                <h3 class="fw-normal mt-5 mb-3">Experiences</h3>
-                <p>Felis ullamcorper curae erat nulla luctus sociosqu phasellus posuere habitasse sollicitudin, libero
-                  sit potenti leo ultricies etiam blandit id platea augue, erat habitant fermentum lorem commodo taciti
-                  tristique etiam curabitur suscipit lacinia habitasse amet mauris eu eget ipsum nec magna in,
-                  adipiscing risus aenean turpis proin duis fringilla praesent ornare lorem eros malesuada vitae nullam
-                  diam velit potenti consectetur, vehicula accumsan risus lectus tortor etiam facilisis tempus sapien
-                  tortor, mi vestibulum taciti dapibus viverra ac justo vivamus erat phasellus turpis nisi class
-                  praesent duis ligula, vel ornare faucibus potenti nibh turpis, at id semper nunc dui blandit. Enim et
-                  nec habitasse ultricies id tortor curabitur, consectetur eu inceptos ante conubia tempor platea odio,
-                  sed sem integer lacinia cras non risus euismod turpis platea erat ultrices iaculis rutrum taciti,
-                  fusce lobortis adipiscing dapibus habitant sodales gravida pulvinar, elementum mi tempus ut commodo
-                  congue ipsum justo nec dui cursus scelerisque elementum volutpat tellus nulla laoreet taciti, nibh
-                  suspendisse primis arcu integer vulputate etiam ligula lobortis nunc, interdum commodo libero aliquam
-                  suscipit phasellus sollicitudin arcu varius venenatis erat ornare tempor nullam donec vitae etiam
-                  tellus.</p>
-
-                <h3 class="fw-normal mt-5 mb-3">Exploring</h3>
-                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna
-                  accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate
-                  bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl
-                  nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque
-                  commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor
-                  enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum
-                  lorem, inceptos nibh orci.</p>
-
-                <!-- Magnific Popup (.js-gallery class is initialized in Helpers.jqMagnific()) -->
-                <!-- For more info and examples you can check out http://dimsemenov.com/plugins/magnific-popup/ -->
-                <div class="row g-sm items-push js-gallery push img-fluid-100">
-                  <div class="col-12 animated fadeIn">
-                    <a class="img-link img-link-simple img-link-zoom-in img-lightbox"
-                      href="assets/media/photos/photo18@2x.jpg">
-                      <img class="img-fluid" src="assets/media/photos/photo18@2x.jpg" alt="">
-                    </a>
-                  </div>
-                  <div class="col-6 animated fadeIn">
-                    <a class="img-link img-link-simple img-link-zoom-in img-lightbox"
-                      href="assets/media/photos/photo16@2x.jpg">
-                      <img class="img-fluid" src="assets/media/photos/photo16.jpg" alt="">
-                    </a>
-                  </div>
-                  <div class="col-6 animated fadeIn">
-                    <a class="img-link img-link-simple img-link-zoom-in img-lightbox"
-                      href="assets/media/photos/photo14@2x.jpg">
-                      <img class="img-fluid" src="assets/media/photos/photo14.jpg" alt="">
-                    </a>
-                  </div>
-                </div>
-                <!-- END Gallery -->
-
-                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna
-                  accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate
-                  bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl
-                  nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque
-                  commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor
-                  enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum
-                  lorem, inceptos nibh orci.</p>
-
-                <h3 class="fw-normal mt-5 mb-3">Memories</h3>
-                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna
-                  accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate
-                  bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl
-                  nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque
-                  commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor
-                  enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum
-                  lorem, inceptos nibh orci.</p>
+                {{ $article->content }}
               </article>
               <!-- END Story -->
-
+              <hr>
+              <div class="row justify-content-center">
+                <div class="col-sm-12">
+                  <b>TAGS:</b>
+                  @foreach ($article->listTags as $tag)
+                  <span class="d-inline-block px-2 py-1 bg-body fw-medium rounded">
+                    #{{ $tag }}
+                  </span>
+                  @endforeach
+                </div>
+              </div>
               <!-- Actions -->
               <div class="mt-5 d-flex justify-content-between push">
                 <a class="btn btn-alt-primary" href="javascript:void(0)">
@@ -153,15 +72,6 @@
                       <a class="dropdown-item" href="javascript:void(0)">
                         <i class="fab fa-fw fa-facebook me-1"></i> Facebook
                       </a>
-                      <a class="dropdown-item" href="javascript:void(0)">
-                        <i class="fab fa-fw fa-twitter me-1"></i> Twitter
-                      </a>
-                      <a class="dropdown-item" href="javascript:void(0)">
-                        <i class="fab fa-fw fa-google-plus me-1"></i> Google+
-                      </a>
-                      <a class="dropdown-item" href="javascript:void(0)">
-                        <i class="fab fa-fw fa-linkedin me-1"></i> LinkedIn
-                      </a>
                     </div>
                   </div>
                 </div>
@@ -169,6 +79,7 @@
               <!-- END Actions -->
             </div>
           </div>
+
         </div>
       </div>
       <!-- END Page Content -->
@@ -181,7 +92,7 @@
           <div class="block-content p-3">
             <form action="be_pages_blog_classic.html" method="POST">
               <div class="input-group">
-                <input type="text" class="form-control form-control-alt" placeholder="Search all posts..">
+                <input type="text" class="form-control form-control-alt" placeholder="Tìm kiếm bài viết">
                 <button class="btn btn-alt-secondary">
                   <i class="fa fa-search"></i>
                 </button>
@@ -195,10 +106,11 @@
         <a class="block-rounded mb-3 block" href="be_pages_generic_profile.html">
           <div class="block-content block-content-full text-center">
             <div class="mb-3">
-              <img class="img-avatar img-avatar96" src="assets/media/avatars/avatar1.jpg" alt="">
+              @php $avatar = $article->createdBy->profile_image != '' ? $article->createdBy->profile_image : asset('images/default_avatar.png') @endphp
+              <img class="img-avatar img-avatar96" src="{{ $avatar }}" alt="">
             </div>
-            <div class="fs-5 fw-semibold">Megan Fuller</div>
-            <div class="fs-sm fw-medium text-muted">Publisher</div>
+            <div class="fs-5 fw-semibold">{{ $article->createdBy->fullname }}</div>
+            <div class="fs-sm fw-medium text-muted">{{ '@' . $article->createdBy->username }}</div>
           </div>
           <div class="block-content border-top">
             <div class="row text-center">
@@ -219,35 +131,8 @@
         </a>
         <!-- END About -->
 
-        <!-- Social -->
-        <div class="block-rounded mb-3 block">
-          <div class="block-content block-content-full">
-            <a class="btn btn-sm btn-alt-secondary" href="javascript:void(0)" data-bs-toggle="tooltip"
-              title="Follow us on Twitter">
-              <i class="fab fa-fw fa-twitter"></i>
-            </a>
-            <a class="btn btn-sm btn-alt-secondary" href="javascript:void(0)" data-bs-toggle="tooltip"
-              title="Like our Facebook page">
-              <i class="fab fa-fw fa-facebook"></i>
-            </a>
-            <a class="btn btn-sm btn-alt-secondary" href="javascript:void(0)" data-bs-toggle="tooltip"
-              title="Follow us on Google Plus">
-              <i class="fab fa-fw fa-google-plus"></i>
-            </a>
-            <a class="btn btn-sm btn-alt-secondary" href="javascript:void(0)" data-bs-toggle="tooltip"
-              title="Follow us on Dribbble">
-              <i class="fab fa-fw fa-dribbble"></i>
-            </a>
-            <a class="btn btn-sm btn-alt-secondary" href="javascript:void(0)" data-bs-toggle="tooltip"
-              title="Subscribe on Youtube">
-              <i class="fab fa-fw fa-youtube"></i>
-            </a>
-          </div>
-        </div>
-        <!-- END Social -->
-
         <!-- Recent Comments -->
-        <div class="block-rounded mb-0 block">
+        {{-- <div class="block-rounded mb-0 block">
           <div class="block-header block-header-default">
             <h3 class="block-title">Recent Comments</h3>
           </div>
@@ -293,7 +178,7 @@
               <a class="text-dark fw-semibold" href="javascript:void(0)">Read More..</a>
             </div>
           </div>
-        </div>
+        </div> --}}
         <!-- END Recent Comments -->
       </div>
     </div>

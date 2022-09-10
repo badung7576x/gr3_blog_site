@@ -21,7 +21,7 @@ Route::get('/management', function() {
 });
 
 Route::group([
-    'prefix' => 'management',
+    'prefix' => '',
     'namespace' => 'App\Http\Controllers', 'as' => 'admin.'
 ], function () {
     Route::get('login', 'LoginController@create')->middleware('guest')->name('login');
@@ -34,14 +34,28 @@ Route::group([
     'namespace' => 'App\Http\Controllers', 'as' => 'admin.',
     'middleware' => 'auth'
 ], function () {
-    Route::get('', 'DashboardController@index')->name('dashboard');
+    Route::get('', 'DashboardController@index')->name('dashboard.index');
+
 });
 
 
 Route::group([
     'prefix' => '',
-    'namespace' => 'App\Http\Controllers', 'as' => 'article.'
+    'namespace' => 'App\Http\Controllers', 'as' => 'article.',
 ], function () {
     Route::get('', 'ArticlesController@home')->name('home');
-    Route::get('/article-detail', 'ArticlesController@detail')->name('detail');
+    Route::get('/article/{article:slug}', 'ArticlesController@detail')->name('detail');
+});
+
+Route::group([
+    'prefix' => '',
+    'namespace' => 'App\Http\Controllers', 'as' => 'article.',
+    'middleware' => 'auth'
+], function () {
+    Route::get('/articles', 'ArticlesController@list')->name('list');
+    Route::get('/article/create', 'ArticlesController@create')->name('create');
+    Route::post('/article/create', 'ArticlesController@store')->name('store');
+    Route::get('/article/{article}/edit', 'ArticlesController@edit')->name('store');
+    Route::post('/article/{article}/edit', 'ArticlesController@update')->name('update');
+    Route::post('/article/{article}/delete', 'ArticlesController@destroy')->name('delete');
 });

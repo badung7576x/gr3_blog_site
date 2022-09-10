@@ -25,14 +25,14 @@
         <div class="block-content">
           <div class="row items-push">
             <div class="col-md-4 col-lg-5">
-              <a class="img-link img-link-simple" href="{{ route('article.detail') }}">
+              <a class="img-link img-link-simple" href="">
                 <img class="img-fluid rounded" src="https://images.unsplash.com/photo-1473163928189-364b2c4e1135?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="">
               </a>
             </div>
             <div class="col-md-8 col-lg-7 d-md-flex align-items-center">
               <div>
                 <h4 class="mb-1">
-                  <a class="text-dark" href="{{ route('article.detail') }}">Top 10 destinations to visit in your lifetime</a>
+                  <a class="text-dark" href="#">Top 10 destinations to visit in your lifetime</a>
                 </h4>
                 <div class="fs-sm fw-medium mb-3">
                   <a href="be_pages_generic_profile.html">Albert Ray</a> on July 16, 2021 · <span class="text-muted">10
