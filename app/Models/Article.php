@@ -32,16 +32,6 @@ class Article extends Model
         });
     }
 
-    /**
-     * Get the route key for the model.
-     *
-     * @return string
-     */
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
-
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
@@ -50,6 +40,11 @@ class Article extends Model
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function reviewBy()
+    {
+        return $this->belongsTo(User::class, 'review_by', 'id');
     }
 
     public function session()

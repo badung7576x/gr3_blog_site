@@ -43,6 +43,18 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
+            'group_id' => 2,
+            'fullname' => 'Reviewer 02',
+            'username' => 'reviewer02',
+            'email' => 'reviewer02@gmail.com',
+            'bio' => 'No description',
+            'profile_image' => '',
+            'password' => 'abc123', 
+            'points' => 0,
+            'status' => 1
+        ]);
+
+        User::create([
             'group_id' => 3,
             'fullname' => 'User 01',
             'username' => 'user01',
@@ -54,5 +66,16 @@ class UserSeeder extends Seeder
             'status' => 1
         ]);
 
+        User::create([
+            'group_id' => 3,
+            'fullname' => 'User 02',
+            'username' => 'user02',
+            'email' => 'user02@gmail.com',
+            'bio' => 'No description',
+            'profile_image' => '',
+            'password' => 'abc123', 
+            'points' => 0,
+            'status' => 1
+        ]);
     }
 }

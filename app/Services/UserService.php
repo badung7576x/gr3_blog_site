@@ -12,6 +12,11 @@ class UserService
     return User::where('group_id', '!=', ROLE_ADMIN)->latest()->get();
   }
 
+  public function getListReviewer()
+  {
+    return User::where('group_id', ROLE_REVIEWER)->orderBy('id')->get();
+  }
+
   public function getGroupUsers()
   {
     return Group::where('id', '!=', ROLE_ADMIN)->orderBy('id', 'asc')->get();

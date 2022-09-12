@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Article;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class ArticleService
 {
@@ -16,7 +18,12 @@ class ArticleService
 
   public function getAllArticlesForAdmin()
   {
-    return Article::where('status', '>=', ARTICLE_CREATED)->latest()->get();
+    return Article::latest()->get();
+  }
+
+  public function getAllArticlesForAssignment()
+  {
+    return Article::where('status', ARTICLE_CREATED)->whereNull('review_by')->latest()->get();
   }
 
   public function createNewArticle(array $data)
@@ -51,5 +58,21 @@ class ArticleService
   public function delete(Article $article)
   {
     return $article->delete();
+  }
+
+  public function assign(string $articles, $reviewer_id)
+  {
+    $articles = explode(',', $articles);
+    try {
+      DB::beginTransaction();
+      Article::whereIn('id', $articles)->update([
+        'review_by' => $reviewer_id,
+        'status' => ARTICLE_WAITING_REVIEW
+      ]);
+      DB::commit();
+    } catch (Exception $e) {
+      DB::rollBack();
+      throw $e;
+    }
   }
 }

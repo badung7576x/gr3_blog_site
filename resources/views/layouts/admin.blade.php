@@ -106,7 +106,7 @@
                     </a>
                   </li>
                   <li class="nav-main-item">
-                    <a class="nav-main-link {{ request()->routeIs('admin.article.index') ? 'active' : '' }}" href="{{ route('admin.article.index') }}">
+                    <a class="nav-main-link {{ request()->routeIs('admin.article.assignment') ? 'active' : '' }}" href="{{ route('admin.article.assignment') }}">
                       <span class="nav-main-link-name">Phân công đánh giá</span>
                     </a>
                   </li>

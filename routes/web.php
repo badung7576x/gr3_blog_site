@@ -36,6 +36,8 @@ Route::group([
 ], function () {
     Route::get('', 'DashboardController@index')->name('dashboard.index');
     Route::resource('articles', 'ArticleController')->names('article');
+    Route::get('assignments', 'ArticleController@assignments')->name('article.assignment');
+    Route::post('assignments', 'ArticleController@assignReviewer')->name('article.assignment');
     Route::resource('users', 'UserController')->names('user');
 });
 
