@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminUpdateArticleRequest;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Article;
 use App\Services\ArticleService;
+use App\Services\CategoryService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ArticleController extends Controller
 {
@@ -15,11 +18,13 @@ class ArticleController extends Controller
 
     protected $articleService;
     protected $userService;
+    protected $categoryService;
 
-    public function __construct(ArticleService $articleService, UserService $userService)
+    public function __construct(ArticleService $articleService, UserService $userService, CategoryService $categoryService)
     {
         $this->articleService = $articleService;
         $this->userService = $userService;
+        $this->categoryService = $categoryService;
     }
     
     /**
@@ -90,9 +95,12 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Article $article)
     {
-        //
+        $categories = $this->categoryService->getCategoriesWithSession();
+        $reviewers = $this->userService->getListReviewer();
+
+        return view('admin.articles.edit', compact('article', 'categories', 'reviewers'));
     }
 
     /**
@@ -102,9 +110,19 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Article $article, AdminUpdateArticleRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        try {
+            $this->articleService->adminUpdateArticle($article, $data);
+            
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return $this->redirectError('Đã xảy ra lỗi trong quá trình lưu bài viết, vui lòng thử lại sau.');
+        }
+
+        return $this->redirectSuccess('admin.article.show', 'Cập nhật bài viết thành công', ['article' => $article]); 
     }
 
     /**
@@ -113,8 +131,10 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Article $article)
     {
-        //
+        $this->articleService->delete($article);
+
+        return $this->redirectSuccess('admin.article.index', 'Xóa bài viết thành công'); 
     }
 }

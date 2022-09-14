@@ -1,15 +1,16 @@
-@extends('layouts.page')
+@extends('layouts.admin')
 
 @section('title', __('Chỉnh sửa bài viết'))
 
 @section('content')
-<div class="content" style="max-width: 100%">
-  <form action="{{ route('article.update', ['article' => $article]) }}" method="POST" enctype="multipart/form-data">
+<div class="content">
+  <form action="{{ route('admin.article.update', ['article' => $article]) }}" method="POST" enctype="multipart/form-data">
     @csrf
+    @method('PUT')
     <input type="hidden" name="id" value="{{ $article->id }}">
     <div class="row">
-      <div class="col-3"></div>
-      <div class="col-6">
+      <div class="col-1"></div>
+      <div class="col-7">
         <div class="block block-rounded">
           <div class="block-header block-header-default">
             <h3 class="block-title">Chỉnh sửa bài viết</h3>
@@ -47,6 +48,20 @@
         <div class="block block-rounded">
           <div class="block-header block-header-default">
             <h3 class="block-title">Thông tin bài viết</h3>
+            <div class="block-options">
+              @php
+                $previousUrl = explode('?', url()->previous())[0];
+                if ($previousUrl == route('admin.article.show', ['article' => $article])) {
+                    session()->put('backUrl', url()->previous());
+                    $backUrl = url()->previous();
+                } else {
+                    $backUrl = session()->get('backUrl');
+                }
+              @endphp
+              <a href="{{ $backUrl }}" class="btn btn-sm btn-secondary">
+                  <i class="fa fa-arrow-left"></i> Quay lại
+              </a>
+            </div>
           </div>
           <div class="block-content">
             <div class="row justify-content-center">
@@ -93,18 +108,42 @@
                 </div>
                 <div class="row mb-4">
                   <div class="col-12">
-                    <label class="form-label">Thời gian đăng bài <span class="text-danger">*</span></label>
-                    <input type="text" class="js-flatpickr form-control @error('publish_schedule') is-invalid @enderror"
-                      name="publish_schedule" data-enable-time="true" data-time_24hr="true" value="{{ old('publish_schedule', $article->publish_schedule) }}">
-                    @error('publish_schedule')
+                    <label class="form-label">Thời gian đăng bài </label>
+                    <input type="text" class="js-flatpickr form-control @error('publish_time') is-invalid @enderror"
+                      name="publish_time" data-enable-time="true" data-time_24hr="true" value="{{ old('publish_time', $article->publish_time) }}">
+                    @error('publish_time')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                  </div>
+                </div>
+                <div class="row mb-4">
+                  <div class="col-12">
+                    <label class="form-label">Người đánh giá </label>
+                    <select class="js-select2 form-select @error('review_by') is-invalid @enderror" name="review_by">
+                      <option value="">Không lựa chọn</option>
+                      @foreach ($reviewers as $reviewer)
+                        <option value="{{ $reviewer->id }}" @selected(old('review_by', $article->review_by) == $reviewer->id)>
+                          {{ $reviewer->fullname }}</option>
+                      @endforeach
+                    </select>
+                    @error('review_by')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                  </div>
+                </div>
+                <div class="row mb-4">
+                  <div class="col-12">
+                    <label class="form-label">Công khai bài viết <span class="text-danger">*</span></label>
+                    <select class="js-select2 form-select @error('is_published') is-invalid @enderror" name="is_published">
+                      <option value="0" @selected(old('is_published', $article->is_published) == 0)>Không công khai</option>
+                      <option value="1" @selected(old('is_published', $article->is_published) == 1)>Công khai</option>
+                    </select>
+                    @error('is_published')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
                   </div>
                 </div>
                 <div class="mb-4 text-center">
-                  {{-- <button type="submit" class="btn btn-secondary me-1 mb-3">
-                    <i class="fa fa-fw fa-cloud-download-alt me-1"></i> Lưu nháp
-                  </button> --}}
                   <button type="submit" class="btn btn-success me-1 mb-3">
                     <i class="fa fa-fw fa-save me-1"></i> Lưu bài viết
                   </button>

@@ -37,10 +37,10 @@
               </div>
             </td>
             <td class="d-none d-md-table-cell text-center">
-              <span class="badge bg-primary">{{ config('data.article_status')[$article->status] }}</span>
+              <span class="">{{ config('data.article_status')[$article->status] }}</span>
             </td>
             <td class="d-none d-md-table-cell text-center">
-              <span class="badge bg-primary">{{ config('data.review_status')[$article->review_status] ?? '-' }}</span>
+              <span class="">{{ config('data.review_status')[$article->review_status] ?? '-' }}</span>
             </td>
             <td class="d-none d-md-table-cell text-center">
               <div class="btn-group me-2 mb-2">

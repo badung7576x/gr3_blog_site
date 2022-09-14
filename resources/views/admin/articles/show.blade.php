@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row">
-  <div class="col-8">
+  <div class="offset-1 col-7">
     <div class="content pe-0">
       <div class="block block-rounded">
         <div class="block-header block-header-default">
@@ -174,8 +174,8 @@
             <a href="{{ $backUrl }}" class="btn btn-sm btn-secondary">
                 <i class="fa fa-arrow-left"></i> Quay lại
             </a>
-            <a class="btn btn-sm btn-outline-success" href="#">
-              <i class="fa fa-cogs"></i> {{ __('Cài đặt') }}
+            <a class="btn btn-sm btn-outline-success" href="{{ route('admin.article.edit', ['article' => $article]) }}">
+              <i class="fa fa-edit"></i> Chỉnh sửa
             </a>
           </div>
         </div>
@@ -237,6 +237,14 @@
                   <tr>
                     <td class="fw-semibold" style="width: 30%">Trạng thái đánh giá</td>
                     <td>{{ config('data.review_status')[$article->review_status] ?? '-' }}</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-semibold" style="width: 30%">Công khai</td>
+                    <td>
+                      <div class="form-check form-switch form-check-inline">
+                        <input class="form-check-input" type="checkbox" value="" checked="" disabled>
+                      </div>
+                    </td>
                   </tr>
                 </tbody>
               </table>

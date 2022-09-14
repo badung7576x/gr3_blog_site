@@ -55,6 +55,20 @@ class ArticleService
     return $article->update($data);
   }
 
+  public function adminUpdateArticle(Article $article, array $data)
+  {
+    if (isset($data['image'])) {
+      $uploadImageService = new UploadImageService();
+      $data['header_thumbnail'] = $uploadImageService->upload($data['image']->get())['url'];
+    }
+
+    $cateSession = explode('_', $data['session_id']);
+    $data['category_id'] = $cateSession[0];
+    $data['session_id'] = $cateSession[1];
+
+    return $article->update($data);
+  }
+
   public function delete(Article $article)
   {
     return $article->delete();

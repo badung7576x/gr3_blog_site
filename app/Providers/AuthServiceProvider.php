@@ -47,7 +47,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('can_preview', function ($user, Article $article) {
             return $article->created_by == $user->id 
                 || $article->review_by == $user->id
-                || $user->group_id == ROLE_ADMIN;
+                || $user->group_id == ROLE_ADMIN
+                || $article->is_published;
         });
     }
 }

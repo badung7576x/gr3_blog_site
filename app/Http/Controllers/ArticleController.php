@@ -87,7 +87,7 @@ class ArticleController extends Controller
             
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return $this->redirectError('create', 'Đã xảy ra lỗi trong quá trình lưu bài viết, vui lòng thử lại sau.');
+            return $this->redirectError('Đã xảy ra lỗi trong quá trình lưu bài viết, vui lòng thử lại sau.');
         }
 
         return $this->redirectSuccess('article.list', 'Cập nhật bài viết thành công');        

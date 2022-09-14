@@ -22,6 +22,10 @@ class Article extends Model
         'created_by', 'review_by', 'review_status', 'is_published'
     ];
 
+    protected $appends = [
+        'list_tags'
+    ];
+
     public static function boot()
     {
         parent::boot();
