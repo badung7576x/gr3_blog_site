@@ -129,9 +129,9 @@
             @endcan
             @can('is_reviewer')
               <li class="nav-main-item">
-                <a class="nav-main-link {{ request()->routeIs('admin.dashboard*') ? 'active' : '' }}" href="{{ route('admin.dashboard.index') }}">
-                  <i class="nav-main-link-icon fa fa-layer-group"></i>
-                  <span class="nav-main-link-name">Danh sách đề thi</span>
+                <a class="nav-main-link {{ request()->routeIs('admin.article.reviews') ? 'active' : '' }}" href="{{ route('admin.article.reviews') }}">
+                  <i class="nav-main-link-icon fa fa-newspaper"></i>
+                  <span class="nav-main-link-name">Danh sách bài viết</span>
                 </a>
               </li>
             @endcan

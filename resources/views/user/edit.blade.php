@@ -38,6 +38,21 @@
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
+                <div class="mb-4">
+                  <label class="form-label">File pdf đính kèm </label>
+                  @if($article->pdf && $article->attachment)
+                    <div class="col-12 mb-2" id="show_pdf">
+                      <div class="h4">
+                        <span class="badge bg-modern-light px-3 py-2"><i class="fa fa-file-pdf me-2"></i>  {!! $article->pdf !!} <i class="fa fa-times ms-2 text-danger pointer" style="cursor: pointer" onclick="removePdf()"></i></span> 
+                      </div>
+                    </div>
+                  @endif
+                  <input type="hidden" value="0" name="remove_pdf">
+                  <input class="form-control mb-4 @error('pdf') is-invalid @enderror" type="file" id="pdf" accept=".pdf" name="pdf">
+                  @error('pdf')
+                    <span class="text-danger">{{ $message }}</span>
+                  @enderror
+                </div>
               </div>
             </div>
           </div>
@@ -223,5 +238,10 @@
     $("#imageUpload").change(function() {
       readURL(this);
     });
+
+    function removePdf() {
+      $('#show_pdf').remove();
+      $('input[name=remove_pdf]').val(1);
+    }
 </script>
 @endsection

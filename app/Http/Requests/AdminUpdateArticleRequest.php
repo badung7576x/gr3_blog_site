@@ -30,6 +30,8 @@ class AdminUpdateArticleRequest extends FormRequest
             'image' => 'nullable',
             'summary' => 'required|string',
             'content' => 'required|string',
+            'pdf' => 'nullable|mimes:pdf|max:4000',
+            'remove_pdf' => 'nullable',
             'publish_time' => 'nullable|date',
             'tags' => 'nullable|string',
             'review_by' => 'nullable|numeric',
@@ -49,7 +51,8 @@ class AdminUpdateArticleRequest extends FormRequest
             'publish_time' => 'thời gian đăng bài',
             'tags' => 'các thẻ tags',
             'review_by' => 'người đánh giá',
-            'is_published' => 'công khai bài viết'
+            'is_published' => 'công khai bài viết',
+            'pdf' => 'file pdf đính kèm',
         ];
     }
 }

@@ -35,6 +35,8 @@ class UpdateArticleRequest extends FormRequest
             'image' => 'nullable',
             'summary' => 'required|string',
             'content' => 'required|string',
+            'pdf' => 'nullable|mimes:pdf|max:4000',
+            'remove_pdf' => 'nullable',
             'publish_schedule' => 'required|date',
             'tags' => 'nullable|string'
         ];
@@ -49,6 +51,7 @@ class UpdateArticleRequest extends FormRequest
             'image' => 'hình ảnh thumbnail',
             'summary' => 'nội dung tóm tắt',
             'content' => 'nội dung bài viết',
+            'pdf' => 'file đính kèm',
             'publish_schedule' => 'thời gian đăng bài',
             'tags' => 'các thẻ tags'
         ];

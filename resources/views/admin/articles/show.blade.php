@@ -3,6 +3,28 @@
 @section('title', __('Chi tiết bài viết'))
 
 @section('content')
+<div class="modal" id="show-pdf-preview" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+          <div class="block-rounded block-transparent mb-0 block">
+              <div class="block-header block-header-default">
+                  <h3 class="block-title">{{ $article->pdf }}</h3>
+                  <div class="block-options">
+                      <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                          <i class="fa fa-fw fa-times"></i>
+                      </button>
+                  </div>
+              </div>
+              <div class="block-content fs-sm">
+                <iframe name="exam-iframe" id="view-pdf"
+                  src="{{ route('admin.article.pdf-preview', ['article' => $article]) }}" 
+                  frameborder="0" style="width: 100%; height: 80vh;"></iframe>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
 <div class="row">
   <div class="offset-1 col-7">
     <div class="content pe-0">
@@ -10,7 +32,7 @@
         <div class="block-header block-header-default">
           <h3 class="block-title">Nội dung bài viết</h3>
           <div class="block-options">
-            
+
           </div>
         </div>
         <div class="block-content block-content-full">
@@ -39,6 +61,14 @@
                 <span class="h5 fw-normal">{!! $article->content !!}</span>
               </div>
             </div>
+            @if($article->pdf && $article->attachment)
+            <hr class="text-center my-4">
+            <div class="col-12 mb-2">
+              <a class="h4"href="javascript:void(0)" id="show-pdf">
+                <span class="badge bg-info px-3 py-2"><i class="fa fa-file-pdf me-2"></i>  {!! $article->pdf !!}</span>
+              </a>
+            </div>
+            @endif
           </div>
         </div>
       </div>
@@ -68,16 +98,6 @@
                     </div>
                     <div class="block-options">
                       <div class="timeline-event-time block-options-item fs-4">
-                        @if ($comment->is_resolved)
-                        <i class="fa fa-check-circle text-success me-2"></i>
-                        @else
-                        @if (auth()->user()->id == $comment->created_by || auth()->user()->id == $question->created_by)
-                        <i class="far fa-check-circle me-2" style="cursor: pointer"
-                          onclick="resolvedComment({{ $comment->id }})"></i>
-                        @endif
-                        @endif
-                        {{-- <i class="far fa-comment-dots me-2" style="cursor: pointer"
-                          onclick="replyCpmment({{ $comment->id }})"></i> --}}
                         @if (auth()->user()->id == $comment->created_by)
                         <div class="dropdown">
                           <i class="fa fa-ellipsis-h" style="cursor: pointer" data-bs-toggle="dropdown"></i>
@@ -87,17 +107,13 @@
                             <a class="dropdown-item" style="cursor: pointer"
                               onclick="deleteComment({{ $comment->id }})">Xóa</a>
                             <form id="delete_comment_{{ $comment->id }}" method="POST"
-                              action="{{ route('admin.comment.destroy', ['question' => $question->id, 'comment' => $comment->id]) }}">
+                              action="{{ route('admin.comment.destroy', ['article' => $article, 'comment' => $comment]) }}">
                               @csrf
                               @method('delete')
                             </form>
                           </div>
                         </div>
                         @endif
-                        <form id="resolved_comment_{{ $comment->id }}" method="POST"
-                          action="{{ route('admin.comment.resolved', ['question' => $question->id, 'comment' => $comment->id]) }}">
-                          @csrf
-                        </form>
                       </div>
                     </div>
                   </div>
@@ -107,7 +123,7 @@
                     </div>
                     <div class="edit_comment_{{ $comment->id }} pt-3 d-none">
                       <form method="POST"
-                        action="{{ route('admin.comment.update', ['question' => $question->id, 'comment' => $comment->id]) }}">
+                        action="{{ route('admin.comment.update', ['article' => $article, 'comment' => $comment]) }}">
                         @csrf
                         @method('PUT')
                         <textarea class="ckeditor1 form-control"
@@ -141,8 +157,7 @@
           <div class="col-md-12 p-3">
             <hr>
             <div class="fw-semibold">Thêm nhận xét mới</div>
-            <form method="POST" action="#">
-            {{-- <form method="POST" action="{{ route('admin.comment.store', ['question' => $question->id]) }}"> --}}
+            <form method="POST" action="{{ route('admin.comment.store', ['article' => $article]) }}">
               @csrf
               <textarea class="ckeditor1 form-control" name="new_comment">{{ old('new_comment') }}</textarea>
               <div class="pt-2">
@@ -163,25 +178,29 @@
           <h3 class="block-title">Thông tin bài viết</h3>
           <div class="block-options">
             @php
-              $previousUrl = explode('?', url()->previous())[0];
-              if ($previousUrl == route('admin.article.index') || $previousUrl == route('admin.article.assignment')) {
-                  session()->put('backUrl', url()->previous());
-                  $backUrl = url()->previous();
-              } else {
-                  $backUrl = session()->get('backUrl');
-              }
+            $previousUrl = explode('?', url()->previous())[0];
+            if ($previousUrl == route('admin.article.index')
+            || $previousUrl == route('admin.article.assignment')
+            || $previousUrl == route('admin.article.reviews')) {
+            session()->put('backUrl', url()->previous());
+            $backUrl = url()->previous();
+            } else {
+            $backUrl = session()->get('backUrl');
+            }
             @endphp
             <a href="{{ $backUrl }}" class="btn btn-sm btn-secondary">
-                <i class="fa fa-arrow-left"></i> Quay lại
+              <i class="fa fa-arrow-left"></i> Quay lại
             </a>
+            @if (auth()->user()->group_id == ROLE_ADMIN)
             <a class="btn btn-sm btn-outline-success" href="{{ route('admin.article.edit', ['article' => $article]) }}">
               <i class="fa fa-edit"></i> Chỉnh sửa
             </a>
+            @endif
           </div>
         </div>
         <div class="block-content block-content-full">
           <div class="row justify-content-center">
-            
+
             <!-- END Form Horizontal - Default Style -->
             <div class="col-12">
               <table class="table-borderless table-striped table-vcenter fs-sm table">
@@ -206,11 +225,11 @@
                     <td class="fw-semibold" style="width: 30%">Tags</td>
                     <td>
                       @forelse ($article->listTags as $tag)
-                        <span class="d-inline-block px-2 py-1 bg-body fw-medium rounded">
-                          #{{ $tag }}
-                        </span>
+                      <span class="d-inline-block px-2 py-1 bg-body fw-medium rounded">
+                        #{{ $tag }}
+                      </span>
                       @empty
-                        <span></span> 
+                      <span></span>
                       @endforelse
                     </td>
                   </tr>
@@ -261,7 +280,20 @@
 
 @section('js_after')
 <script>
+  $(document).ready(function() {
+  });
 
+  function deleteComment(id) {
+    $('#delete_comment_' + id).submit();
+  }
+
+  function editComment(id){
+    $('.edit_comment_' + id).toggleClass('d-none');
+  }
+
+  $('#show-pdf').on('click', function(e) {
+    $('#show-pdf-preview').modal('show');
+  });
 </script>
 
 @endsection

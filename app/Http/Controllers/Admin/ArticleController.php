@@ -10,7 +10,10 @@ use App\Services\ArticleService;
 use App\Services\CategoryService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 class ArticleController extends Controller
 {
@@ -56,6 +59,13 @@ class ArticleController extends Controller
         return $this->redirectSuccess('admin.article.assignment', 'Bài viết đã được gán cho người đánh giá');
     }
 
+    public function reviews()
+    {
+        $articles = $this->articleService->getAllArticlesForReview();
+
+        return view('admin.articles.reviews', compact('articles'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -85,7 +95,8 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        $comments = [];
+        $comments = $this->articleService->getAllCommentForArticle($article);
+
         return view('admin.articles.show', compact('article', 'comments'));
     }
 
@@ -136,5 +147,15 @@ class ArticleController extends Controller
         $this->articleService->delete($article);
 
         return $this->redirectSuccess('admin.article.index', 'Xóa bài viết thành công'); 
+    }
+
+    public function pdfPreview(Article $article)
+    {
+        if (!Gate::allows('can_preview', [$article])) abort(404);
+
+        return Response::make(Storage::get($article->attachment), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="'. $article->pdf .'"'
+        ]);
     }
 }

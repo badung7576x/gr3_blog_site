@@ -40,6 +40,13 @@
                   <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
+                <div class="mb-4">
+                  <label class="form-label">File pdf đính kèm </label>
+                  <input class="form-control mb-4 @error('pdf') is-invalid @enderror" type="file" id="pdf" accept=".pdf" name="pdf">
+                  @error('pdf')
+                    <span class="text-danger">{{ $message }}</span>
+                  @enderror
+                </div>
               </div>
             </div>
           </div>
@@ -200,7 +207,7 @@
           extraPlugins: 'mathjax',
           mathJaxLib: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML',
           removeButtons: 'PasteFromWord',
-          height: 800
+          height: 600
         })
       });
     }

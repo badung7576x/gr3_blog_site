@@ -29,7 +29,8 @@ class CreateArticleRequest extends FormRequest
             'session_id' => 'required|string',
             'image' => 'nullable',
             'summary' => 'required|string',
-            'content' => 'required|string',
+            'content' => 'nullable|string',
+            'pdf' => 'nullable|mimes:pdf|max:4000',
             'publish_schedule' => 'required|date',
             'tags' => 'nullable|string'
         ];
@@ -43,6 +44,7 @@ class CreateArticleRequest extends FormRequest
             'session_id' => 'phiên đăng bài',
             'image' => 'hình ảnh thumbnail',
             'summary' => 'nội dung tóm tắt',
+            'pdf' => 'file đính kèm',
             'content' => 'nội dung bài viết',
             'publish_schedule' => 'thời gian đăng bài',
             'tags' => 'các thẻ tags'

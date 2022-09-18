@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('header_thumbnail')->nullable();
             $table->text('summary')->nullable();
             $table->text('content')->nullable();
+            $table->string('pdf')->nullable();
+            $table->string('attachment')->nullable();
             $table->dateTime('publish_schedule')->nullable();
             $table->dateTime('publish_time')->nullable();
             $table->string('tags')->nullable();

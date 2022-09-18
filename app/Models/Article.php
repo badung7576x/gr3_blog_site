@@ -17,7 +17,7 @@ class Article extends Model
 
     protected $fillable = [
         'slug', 'title', 'category_id', 'session_id',
-        'header_thumbnail', 'summary', 'content',
+        'header_thumbnail', 'summary', 'content', 'pdf', 'attachment',
         'publish_schedule', 'publish_time', 'tags', 'status',
         'created_by', 'review_by', 'review_status', 'is_published'
     ];
@@ -54,6 +54,11 @@ class Article extends Model
     public function session()
     {
         return $this->belongsTo(Session::class, 'session_id', 'id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'article_id', 'id');
     }
 
     public function listTags(): Attribute

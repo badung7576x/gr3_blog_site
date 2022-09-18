@@ -35,9 +35,12 @@ Route::group([
     'middleware' => 'auth'
 ], function () {
     Route::get('', 'DashboardController@index')->name('dashboard.index');
+    Route::get('articles/{article}/pdf-preview', 'ArticleController@pdfPreview')->name('article.pdf-preview');
     Route::resource('articles', 'ArticleController')->names('article');
     Route::get('assignments', 'ArticleController@assignments')->name('article.assignment');
     Route::post('assignments', 'ArticleController@assignReviewer')->name('article.assignment');
+    Route::get('reviews', 'ArticleController@reviews')->name('article.reviews');
+    Route::resource('articles.comments', 'CommentController')->names('comment');
     Route::resource('users', 'UserController')->names('user');
 });
 

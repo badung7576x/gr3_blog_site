@@ -20,9 +20,7 @@
                 <th style="width: 35%" class="text-truncate">Tiêu đề bài viết</th>
                 <th style="width: 15%;" class="text-center">Danh mục</th>
                 <th style="width: 15%;" class="text-center">Tác giả</th>
-                <th style="width: 15%;" class="text-center">Người đánh giá</th>
                 <th style="width: 15%;" class="text-center">Trạng thái <br>Bài viết/Đánh giá</th>
-                <th style="width: 15%;" class="text-center">Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -36,23 +34,7 @@
                   </td>
                   <td class="text-center">{{ $article->category->name  }} > {{ $article->session->session_name }}</td>
                   <td class="text-center">{{ $article->createdBy->fullname }}</td>
-                  <td class="text-center">{{ $article->reviewBy->fullname  ?? '-'}}</td>
                   <td class="text-center">{{ config('data.article_status')[$article->status] }}/{{ config('data.review_status')[$article->review_status] ?? '-' }}</td>
-                  <td class="text-center">
-                    <div class="btn-group">
-                      <a href="{{ route('admin.article.edit', ['article' => $article]) }}" class="btn btn-sm btn-alt-secondary" title="{{ __('Chỉnh sửa') }}">
-                        <i class="fa fa-fw fa-pencil-alt"></i>
-                      </a>
-                      <form method="POST" action="{{ route('admin.article.destroy', ['article' => $article]) }}" id="delete_form_{{ $article->id }}">
-                        @csrf
-                        @method('delete')
-                        <button type="button" class="btn btn-sm btn-alt-secondary text-danger delete-btn" data-id="{{ $article->id }}"
-                          data-name="{{ $article->title }}" data-bs-toggle="tooltip" title="{{ __('Xóa') }}">
-                          <i class="fa fa-fw fa-trash"></i>
-                        </button>
-                      </form>
-                    </div>
-                  </td>
                 </tr>
               @endforeach
             </tbody>

@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Models\Article;
+use App\Models\Comment;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleService
 {
@@ -26,11 +28,22 @@ class ArticleService
     return Article::where('status', ARTICLE_CREATED)->whereNull('review_by')->latest()->get();
   }
 
+  public function getAllArticlesForReview()
+  {
+    return Article::where('review_by', auth()->user()->id)->orderBy('review_status', 'asc')->get();
+  }
+
   public function createNewArticle(array $data)
   {
     if (isset($data['image'])) {
       $uploadImageService = new UploadImageService();
       $data['header_thumbnail'] = $uploadImageService->upload($data['image']->get())['url'];
+    }
+
+    if (isset($data['pdf'])) {
+      $fileName = $data['pdf']->getClientOriginalName();
+      $data['attachment'] = Storage::put('attachments', $data['pdf']);
+      $data['pdf'] = $fileName;
     }
 
     $cateSession = explode('_', $data['session_id']);
@@ -48,6 +61,18 @@ class ArticleService
       $data['header_thumbnail'] = $uploadImageService->upload($data['image']->get())['url'];
     }
 
+    if (isset($data['remove_pdf']) && $data['remove_pdf'] == 1) {
+      if($article->attachment) Storage::delete($article->attachment);
+      $data['attachment'] = $data['pdf'] = null;
+    }
+
+    if (isset($data['pdf'])) {
+      if($article->attachment) Storage::delete($article->attachment);
+      $fileName = $data['pdf']->getClientOriginalName();
+      $data['attachment'] = Storage::put('attachments', $data['pdf']);
+      $data['pdf'] = $fileName;
+    }
+
     $cateSession = explode('_', $data['session_id']);
     $data['category_id'] = $cateSession[0];
     $data['session_id'] = $cateSession[1];
@@ -60,6 +85,18 @@ class ArticleService
     if (isset($data['image'])) {
       $uploadImageService = new UploadImageService();
       $data['header_thumbnail'] = $uploadImageService->upload($data['image']->get())['url'];
+    }
+
+    if (isset($data['remove_pdf']) && $data['remove_pdf'] == 1) {
+      if($article->attachment) Storage::delete($article->attachment);
+      $data['attachment'] = $data['pdf'] = null;
+    }
+
+    if (isset($data['pdf'])) {
+      if($article->attachment) Storage::delete($article->attachment);
+      $fileName = $data['pdf']->getClientOriginalName();
+      $data['attachment'] = Storage::put('attachments', $data['pdf']);
+      $data['pdf'] = $fileName;
     }
 
     $cateSession = explode('_', $data['session_id']);
@@ -88,5 +125,10 @@ class ArticleService
       DB::rollBack();
       throw $e;
     }
+  }
+
+  public function getAllCommentForArticle(Article $article)
+  {
+    return Comment::where('article_id', $article->id)->latest()->get();
   }
 }
