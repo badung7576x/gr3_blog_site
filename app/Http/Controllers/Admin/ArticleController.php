@@ -96,8 +96,9 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         $comments = $this->articleService->getAllCommentForArticle($article);
+        $categories = $this->categoryService->getCategoriesWithSession();
 
-        return view('admin.articles.show', compact('article', 'comments'));
+        return view('admin.articles.show', compact('article', 'comments', 'categories'));
     }
 
     /**
@@ -127,6 +128,22 @@ class ArticleController extends Controller
 
         try {
             $this->articleService->adminUpdateArticle($article, $data);
+            
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return $this->redirectError('Đã xảy ra lỗi trong quá trình lưu bài viết, vui lòng thử lại sau.');
+        }
+
+        return $this->redirectSuccess('admin.article.show', 'Cập nhật bài viết thành công', ['article' => $article]); 
+    }
+
+
+    public function reviewUpdate(Article $article, Request $request)
+    {
+        $data = $request->only(['session_id', 'is_published', 'publish_time', 'review_status']);
+
+        try {
+            $this->articleService->reviewerUpdateArticle($article, $data);
             
         } catch (\Exception $e) {
             Log::error($e->getMessage());

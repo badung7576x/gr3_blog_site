@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\Article;
 use App\Models\Comment;
+use App\Models\Session;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -16,6 +18,19 @@ class ArticleService
     $currentUser = auth()->user();
 
     return Article::where('created_by', $currentUser->id)->latest()->get();
+  }
+
+  public function getAllForHomepage()
+  {
+    $now = Carbon::now()->format('Y-m-d H:i:s');
+
+    $sessionIds = Session::where('start_time', '<=', $now)->where('end_time', '>=', $now)->pluck('id')->all();
+
+    return Article::where('is_published', true)
+      ->where('status', ARTICLE_ACCEPTED)
+      ->where('publish_time', '<=', $now)
+      ->whereIn('session_id', $sessionIds)
+      ->latest()->get();
   }
 
   public function getAllArticlesForAdmin()
@@ -99,6 +114,15 @@ class ArticleService
       $data['pdf'] = $fileName;
     }
 
+    $cateSession = explode('_', $data['session_id']);
+    $data['category_id'] = $cateSession[0];
+    $data['session_id'] = $cateSession[1];
+
+    return $article->update($data);
+  }
+
+  public function reviewerUpdateArticle(Article $article, array $data)
+  {
     $cateSession = explode('_', $data['session_id']);
     $data['category_id'] = $cateSession[0];
     $data['session_id'] = $cateSession[1];

@@ -25,6 +25,86 @@
   </div>
 </div>
 
+<div class="modal" id="setting-article" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="block-rounded block-transparent mb-0 block">
+            <form action="{{ route('admin.article.review-update', ['article' => $article]) }}" method="POST">
+              <div class="block-header block-header-default">
+                  <h3 class="block-title">Chỉnh sửa bài biết</h3>
+                  <div class="block-options">
+                      <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                          <i class="fa fa-fw fa-times"></i>
+                      </button>
+                  </div>
+              </div>
+              <div class="block-content fs-sm">
+                
+                  @csrf
+                  <div class="mb-4">
+                    <label class="form-label">Phiên đăng bài <span class="text-danger">*</span></label>
+                    <select class="js-select2 form-select @error('session_id') is-invalid @enderror" name="session_id">
+                      <option value=""></option>
+                      @foreach ($categories as $cate)
+                        @foreach ($cate->sessions as $session)
+                        <option value="{{ $cate->id . '_' . $session->id }}" @selected(old('session_id', $article->category_id . '_' . $article->session_id) == $cate->id . '_' . $session->id)>
+                          {{ $cate->name . '_' . $session->session_name }}</option>
+                        @endforeach
+                      @endforeach
+                    </select>
+                    @error('session_id')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                  </div>
+                  <div class="row mb-4">
+                    <div class="col-12">
+                      <label class="form-label">Thời gian đăng bài <span class="text-danger">*</span></label>
+                      <input type="text" class="js-flatpickr form-control @error('publish_time') is-invalid @enderror"
+                        name="publish_time" data-enable-time="true" data-time_24hr="true" value="{{ old('publish_time', $article->publish_time) }}">
+                      @error('publish_time')
+                        <span class="text-danger">{{ $message }}</span>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="row mb-4">
+                    <div class="col-12">
+                      <label class="form-label">Trạng thái đánh giá</label>
+                      <select class="js-select2 form-select @error('review_status') is-invalid @enderror" name="review_status">
+                        <option value=""></option>
+                        <option value="{{ REVIEW_ACCEPTED }}" @selected(old('review_status', $article->review_status) == REVIEW_ACCEPTED)>
+                          {{ config('data.review_status')[REVIEW_ACCEPTED] }}</option>
+                        <option value="{{ REVIEW_ACCEPTED_EDIT }}" @selected(old('review_status', $article->review_status) == REVIEW_ACCEPTED_EDIT)>
+                          {{ config('data.review_status')[REVIEW_ACCEPTED_EDIT] }}</option>
+                        <option value="{{ REVIEW_ACCEPTED_REWRITE}}" @selected(old('review_status', $article->review_status) == REVIEW_ACCEPTED_REWRITE)
+                          >{{ config('data.review_status')[REVIEW_ACCEPTED_REWRITE] }}</option>
+                        <option value="{{ REVIEW_DENIED }}" @selected(old('review_status', $article->review_status) == REVIEW_DENIED)
+                          >{{ config('data.review_status')[REVIEW_DENIED] }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row mb-4">
+                    <div class="col-12">
+                      <label class="form-label">Công khai bài viết <span class="text-danger">*</span></label>
+                      <select class="js-select2 form-select @error('is_published') is-invalid @enderror" name="is_published">
+                        <option value="0" @selected(old('is_published', $article->is_published) == 0)>Không công khai</option>
+                        <option value="1" @selected(old('is_published', $article->is_published) == 1)>Công khai</option>
+                      </select>
+                      @error('is_published')
+                        <span class="text-danger">{{ $message }}</span>
+                      @enderror
+                    </div>
+                  </div>
+                
+              </div>
+              <div class="block-content block-content-full text-end bg-body">
+                <button type="submit" class="btn btn-sm btn-outline-success"><i class="fa fa-save me-1"></i>Cập nhật</button>
+              </div>
+            </form>
+          </div>
+      </div>
+  </div>
+</div>
+
 <div class="row">
   <div class="offset-1 col-7">
     <div class="content pe-0">
@@ -196,6 +276,11 @@
               <i class="fa fa-edit"></i> Chỉnh sửa
             </a>
             @endif
+            @if (auth()->user()->group_id == ROLE_REVIEWER)
+            <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#setting-article">
+              <i class="fa fa-edit"></i> Chỉnh sửa
+            </button>
+            @endif
           </div>
         </div>
         <div class="block-content block-content-full">
@@ -277,9 +362,14 @@
 
 @endsection
 
-
+@section('css_before')
+<link rel="stylesheet" href="{{ asset('/js/plugins/flatpickr/flatpickr.min.css') }}">
+@endsection
 @section('js_after')
+<script src="{{ asset('/js/plugins/flatpickr/flatpickr.min.js') }}"></script>
 <script>
+  One.helpersOnLoad(['jq-datepicker', 'js-flatpickr']);
+
   $(document).ready(function() {
   });
 

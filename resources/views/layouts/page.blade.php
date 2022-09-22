@@ -63,6 +63,7 @@
 
         <!-- Extra -->
         <div>
+          @php $username = auth()->user() ? auth()->user() ->username : 'xxx' @endphp
           <!-- Options -->
           <div class="dropdown d-inline-block ms-1">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="sidebar-themes-dropdown"
@@ -102,13 +103,13 @@
         <div class="content-side">
           <ul class="nav-main">
             <li class="nav-main-item">
-              <a class="nav-main-link" href="{{ route('article.list') }}">
+              <a class="nav-main-link" href="{{ route('article.index', ['username' => $username]) }}">
                 <i class="nav-main-link-icon si si-rocket"></i>
                 <span class="nav-main-link-name">Quản lý bài viết</span>
               </a>
             </li>
             <li class="nav-main-item">
-              <a class="nav-main-link" href="{{ route('article.create') }}">
+              <a class="nav-main-link" href="{{ route('article.create', ['username' => $username]) }}">
                 <i class="nav-main-link-icon si si-plus"></i>
                 <span class="nav-main-link-name">Tạo bài viết mới</span>
               </a>
@@ -143,13 +144,13 @@
           <div class="d-none d-lg-block">
             <ul class="nav-main nav-main-horizontal nav-main-hover">
               <li class="nav-main-item">
-                <a class="nav-main-link" href="{{ route('article.list') }}">
+                <a class="nav-main-link" href="{{ route('article.index', ['username' => $username]) }}">
                   <i class="nav-main-link-icon si si-list"></i>
                   <span class="nav-main-link-name">Quản lý bài viết</span>
                 </a>
               </li>
               <li class="nav-main-item">
-                <a class="nav-main-link" href="{{ route('article.create') }}">
+                <a class="nav-main-link" href="{{ route('article.create', ['username' => $username]) }}">
                   <i class="nav-main-link-icon si si-plus"></i>
                   <span class="nav-main-link-name">Tạo bài viết mới</span>
                 </a>

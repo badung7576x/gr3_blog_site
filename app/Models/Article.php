@@ -23,7 +23,8 @@ class Article extends Model
     ];
 
     protected $appends = [
-        'list_tags'
+        'list_tags',
+        'publish_time_label'
     ];
 
     public static function boot()
@@ -71,6 +72,15 @@ class Article extends Model
     }
 
     public function createdAt(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value, $attributes) {
+                return Carbon::parse($value)->format('H:i d/m/Y');
+            },
+        );
+    }
+
+    public function publishTimeLabel(): Attribute
     {
         return Attribute::make(
             get: function ($value, $attributes) {

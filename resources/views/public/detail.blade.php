@@ -24,14 +24,14 @@
             <h1 class="h2 mb-2">
               {{ $article->title }}
             </h1>
-            {{-- <span class="d-inline-block py-2 px-2 bg-body fw-medium rounded">
-              {{ $article->publish_time ?? now()->format('H:m d-m-Y') }} &bull; <span>{{ round(strlen($article->content) / 350) }} phút đọc</span>
-            </span> --}}
+            <span class="d-inline-block py-2 px-2 bg-body fw-medium rounded">
+              {{ $article->category->name}}
+            </span>
           </div>
           <div class="fw-normal mb-0">
             {!! $article->summary !!}
           </div>
-          <div class="mb-3" style="width: 100%; height: 20px; border-bottom: 1px solid black; text-align: center">
+          <div class="mb-3" style="width: 300px; height: 20px; border-bottom: 1px solid black; text-align: center; margin-left: 230px">
             <span style="font-size: 20px; background-color: #FFF; padding: 0 10px;position: relative;top: 6px">
               ***
             </span>

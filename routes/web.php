@@ -42,6 +42,7 @@ Route::group([
     Route::get('reviews', 'ArticleController@reviews')->name('article.reviews');
     Route::resource('articles.comments', 'CommentController')->names('comment');
     Route::resource('users', 'UserController')->names('user');
+    Route::post('articles/{article}/review-update', 'ArticleController@reviewUpdate')->name('article.review-update');
 });
 
 
@@ -56,13 +57,8 @@ Route::group([
 
 Route::group([
     'prefix' => '',
-    'namespace' => 'App\Http\Controllers', 'as' => 'article.',
+    'namespace' => 'App\Http\Controllers', 'as' => '',
     'middleware' => 'auth'
 ], function () {
-    Route::get('/articles', 'ArticleController@list')->name('list');
-    Route::get('/articles/create', 'ArticleController@create')->name('create');
-    Route::post('/articles/create', 'ArticleController@store')->name('store');
-    Route::get('/articles/{article}/edit', 'ArticleController@edit')->name('edit');
-    Route::post('/articles/{article}/edit', 'ArticleController@update')->name('update');
-    Route::post('/articles/{article}/delete', 'ArticleController@destroy')->name('delete');
+    Route::resource('{username}/articles', 'ArticleController')->names('article');
 });

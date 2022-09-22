@@ -148,6 +148,26 @@
                 </div>
                 <div class="row mb-4">
                   <div class="col-12">
+                    <label class="form-label">Trạng thái bài viết</label>
+                    <select class="js-select2 form-select @error('status') is-invalid @enderror" name="status">
+                      <option value="{{ ARTICLE_DRAFT }}" @selected(old('status', $article->status) == ARTICLE_DRAFT)>
+                        {{ config('data.article_status')[ARTICLE_DRAFT] }}</option>
+                      <option value="{{ ARTICLE_CREATED }}" @selected(old('status', $article->status) == ARTICLE_CREATED)>
+                        {{ config('data.article_status')[ARTICLE_CREATED] }}</option>
+                      <option value="{{ ARTICLE_WAITING_REVIEW }}" @selected(old('status', $article->status) == ARTICLE_WAITING_REVIEW)>
+                        {{ config('data.article_status')[ARTICLE_WAITING_REVIEW] }}</option>
+                      <option value="{{ ARTICLE_ACCEPTED }}" @selected(old('status', $article->status) == ARTICLE_ACCEPTED)>
+                        {{ config('data.article_status')[ARTICLE_ACCEPTED] }}</option>
+                      <option value="{{ ARTICLE_DENIED }}" @selected(old('status', $article->status) == ARTICLE_DENIED)>
+                        {{ config('data.article_status')[ARTICLE_DENIED] }}</option>
+                    </select>
+                    @error('status')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                  </div>
+                </div>
+                <div class="row mb-4">
+                  <div class="col-12">
                     <label class="form-label">Công khai bài viết <span class="text-danger">*</span></label>
                     <select class="js-select2 form-select @error('is_published') is-invalid @enderror" name="is_published">
                       <option value="0" @selected(old('is_published', $article->is_published) == 0)>Không công khai</option>

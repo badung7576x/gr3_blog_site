@@ -5,11 +5,12 @@
 @section('content')
 <div class="content">
   <!-- Topics -->
+  @php $username = auth()->user() ? auth()->user() ->username : 'xxx' @endphp
   <div class="block block-rounded">
     <div class="block-header block-header-default">
       <h3 class="block-title">Danh sách bài viết</h3>
       <div class="block-options">
-        <a class="btn-block-option me-2" href="{{ route('article.create') }}">
+        <a class="btn-block-option me-2" href="{{ route('article.create', ['username' => $username]) }}">
           <i class="si si-plus me-1"></i> Tạo bài viết mới
         </a>
       </div>
@@ -31,7 +32,10 @@
           <tr>
             <td class="text-center">{{ $loop->iteration }}</td>
             <td>
-              <a class="fw-semibold" href="{{ route('article.preview', ['article' => $article]) }}">{{ $article->title }}</a>
+              @php 
+                $articleUrl = $article->is_published ? route('article.detail', ['article' => $article]) : route('article.preview', ['article' => $article]);
+              @endphp
+              <a class="fw-semibold" target="_blank" href="{{ $articleUrl }}">{{ $article->title }}</a>
               <div class="fs-sm text-muted mt-1">
                 <span class="badge bg-info">{{ $article->category->name }}</span> tạo lúc <span>{{ $article->created_at }}</span>
               </div>
@@ -44,11 +48,17 @@
             </td>
             <td class="d-none d-md-table-cell text-center">
               <div class="btn-group me-2 mb-2">
-                <a class="btn btn-outline-secondary" href="{{ route('article.edit', ['article' => $article]) }}">
-                  <i class="fa fa-fw fa-edit"></i>
+                <a class="btn btn-outline-secondary" href="{{ route('article.show', ['username' => $username, 'article' => $article]) }}">
+                  <i class="fa fa-fw fa-eye"></i>
                 </a>
-                <form method="POST" action="{{ route('article.delete', ['article' => $article]) }}" id="delete_form_{{ $article->id }}">
+                @if(!$article->is_published)
+                  <a class="btn btn-outline-secondary" href="{{ route('article.edit', ['username' => $username, 'article' => $article]) }}">
+                    <i class="fa fa-fw fa-edit"></i>
+                  </a>
+                @endif
+                <form method="POST" action="{{ route('article.destroy', ['username' => $username, 'article' => $article]) }}" id="delete_form_{{ $article->id }}">
                   @csrf
+                  @method('delete')
                 </form>
                 <button type="button" class="btn btn-outline-secondary delete-btn"
                   data-id="{{ $article->id }}" data-name="{{ $article->title }}" data-bs-toggle="tooltip" title="{{ __('Xóa') }}">
