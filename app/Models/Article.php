@@ -84,7 +84,7 @@ class Article extends Model
     {
         return Attribute::make(
             get: function ($value, $attributes) {
-                return Carbon::parse($value)->format('H:i d/m/Y');
+                return Carbon::parse($attributes['publish_time'])->format('H:i d/m/Y');
             },
         );
     }

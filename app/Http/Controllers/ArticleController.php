@@ -11,6 +11,7 @@ use App\Services\ArticleService;
 use App\Services\CategoryService;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
@@ -37,11 +38,12 @@ class ArticleController extends Controller
         return view('public.user.list', compact('articles'));
     }
 
-    public function home()
+    public function home(Request $request)
     {
-        $articles = $this->articleService->getAllForHomepage();
+        $articles = $this->articleService->getAllForHomepage($request);
+        $categories = $this->categoryService->getCategoriesWithSession();
 
-        return view('public.home', compact('articles'));
+        return view('public.home', compact('articles', 'categories'));
     }
 
     public function preview(Article $article)
@@ -53,7 +55,7 @@ class ArticleController extends Controller
 
     public function detail(Article $article)
     {
-        if (!Gate::allows('can_preview', [$article])) abort(404);
+        if (!$article->is_published && !Gate::allows('can_preview', [$article])) abort(404);
 
         return view('public.detail', compact('article'));
     }

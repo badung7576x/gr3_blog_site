@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Models\Session;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,17 +21,29 @@ class ArticleService
     return Article::where('created_by', $currentUser->id)->latest()->get();
   }
 
-  public function getAllForHomepage()
+  public function getAllForHomepage(Request $request)
   {
+    $keyword = $request->get('keyword');
+    $category = $request->get('category');
+
     $now = Carbon::now()->format('Y-m-d H:i:s');
 
     $sessionIds = Session::where('start_time', '<=', $now)->where('end_time', '>=', $now)->pluck('id')->all();
 
-    return Article::where('is_published', true)
+    $query = Article::where('is_published', true)
       ->where('status', ARTICLE_ACCEPTED)
       ->where('publish_time', '<=', $now)
-      ->whereIn('session_id', $sessionIds)
-      ->latest()->get();
+      ->whereIn('session_id', $sessionIds);
+
+    if($keyword) {
+      $query = $query->where('title', 'like', '%' . $keyword . '%');
+    }
+
+    if($category) {
+      $query = $query->where('category_id', $category);
+    }
+
+    return $query->latest()->get();
   }
 
   public function getAllArticlesForAdmin()
