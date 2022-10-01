@@ -26,11 +26,14 @@ class CreateCategoryRequest extends FormRequest
         return [
             'name' => 'required|string',
             'session_name' => 'required|array',
-            'session_name.*' => 'required|string',
+            'session_name.0' => 'required|string',
+            'session_name.*' => 'nullable|string',
             'session_start' => 'required|array',
-            'session_start.*' => 'required|date',
+            'session_start.0' => 'required|date',
+            'session_start.*' => 'nullable|date||required_unless:session_name.*,null',
             'session_end' => 'required|array',
-            'session_end.*' => 'required|date',
+            'session_end.0' => 'required|date',
+            'session_end.*' => 'nullable|date|after:session_start.*|required_unless:session_name.*,null',
         ];
     }
 

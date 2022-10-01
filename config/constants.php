@@ -17,3 +17,6 @@ if (!defined('REVIEW_ACCEPTED')) define('REVIEW_ACCEPTED', 0);
 if (!defined('REVIEW_ACCEPTED_REWRITE')) define('REVIEW_ACCEPTED_REWRITE', 1);
 if (!defined('REVIEW_ACCEPTED_EDIT')) define('REVIEW_ACCEPTED_EDIT', 2);
 if (!defined('REVIEW_DENIED')) define('REVIEW_DENIED', 9);
+
+
+if (!defined('MAX_SESSIONS')) define('MAX_SESSIONS', 5);

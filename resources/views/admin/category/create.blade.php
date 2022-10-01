@@ -38,12 +38,12 @@
                   <div class="row mb-3">
                     <label class="col-8 col-form-label">Các phiên đăng bài</label>
                     <div class="col-4 d-flex justify-content-end mt-2">
-                      <a class="me-3" href="#" onclick="addContent()">
+                      {{-- <a class="me-3" href="#" onclick="addContent()">
                           <i class="fa fa-plus-circle text-success"></i> Thêm phiên
                       </a>
                       <a class="removeBtn" href="#" onclick="removeContent()">
                           <i class="fa fa-minus-circle text-danger"></i> Xóa phiên
-                      </a>
+                      </a> --}}
                     </div>
                     <div class="col-12">
                       <div class="row mb-2">
@@ -52,30 +52,32 @@
                         <label class="col-4 col-form-label">Kết thúc <span style="color: red">*</span></label>
                       </div>
                       <div id="content-area">
+                        @for ($i = 0; $i < MAX_SESSIONS; $i++)
                         <div class="row mb-2">
                           <div class="col-4">
-                            <input type="text" class="form-control @error('session_name.0') is-invalid @enderror" name="session_name[]" value="{{ old('session_name.0', '') }}">
-                            @error('session_name.0')
+                            <input type="text" class="form-control @error('session_name.' . $i) is-invalid @enderror" name="session_name[]" value="{{ old('session_name.' . $i, '') }}">
+                            @error('session_name.' . $i)
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                           </div>
                           <div class="col-4">
-                            <input type="text" class="js-flatpickr form-control @error('session_start.0') is-invalid @enderror"
+                            <input type="text" class="js-flatpickr form-control @error('session_start.' . $i) is-invalid @enderror"
                               data-enable-time="true" data-time_24hr="true" 
-                              name="session_start[]" value="{{ old('session_start.0', '') }}">
-                            @error('session_start.0')
+                              name="session_start[]" value="{{ old('session_start.' . $i, '') }}">
+                            @error('session_start.' . $i)
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                           </div>
                           <div class="col-4">
-                            <input type="text" class="js-flatpickr form-control @error('session_end.0') is-invalid @enderror" 
+                            <input type="text" class="js-flatpickr form-control @error('session_end.' . $i) is-invalid @enderror" 
                               data-enable-time="true" data-time_24hr="true" 
-                              name="session_end[]" value="{{ old('session_end.0', '') }}">
-                            @error('session_end.0')
+                              name="session_end[]" value="{{ old('session_end.' . $i, '') }}">
+                            @error('session_end.' . $i)
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                           </div>
                         </div>
+                        @endfor
                       </div>
                     </div>
                   </div>
@@ -147,9 +149,9 @@
     });
   }
 
-  $(document).ready(function() {
-    showOldContent();
-  });
+  // $(document).ready(function() {
+  //   showOldContent();
+  // });
 
 </script>
 @endsection

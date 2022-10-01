@@ -8,6 +8,7 @@ use App\Http\Traits\ResponseTrait;
 use App\Models\Category;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
@@ -50,7 +51,17 @@ class CategoryController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
-        dd($request->validated());
+        $data = $request->validated();
+
+        try {
+            $this->categoryService->createCategory($data);
+            
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return $this->redirectError('Đã xảy ra lỗi trong quá trình tạo danh mục, vui lòng thử lại sau.');
+        }
+
+        return $this->redirectSuccess('admin.category.index', 'Tạo danh mục thành công'); 
     }
 
     /**
