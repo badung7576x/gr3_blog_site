@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('session_name')->nullable();
             $table->dateTime('start_time')->nullable();
             $table->dateTime('end_time')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

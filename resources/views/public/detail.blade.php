@@ -87,7 +87,7 @@
     <div class="col-xxl-4">
       <div class="bg-body-dark rounded-3 p-4">
         <!-- About -->
-        <a class="block-rounded mb-3 block" href="be_pages_generic_profile.html">
+        <a class="block-rounded mb-3 block" href="#">
           <div class="block-content block-content-full text-center">
             <div class="mb-3">
               @php $avatar = $article->createdBy->profile_image != '' ? $article->createdBy->profile_image : asset('images/default_avatar.png') @endphp
@@ -102,13 +102,13 @@
                 <div class="mb-2">
                   <i class="si si-pencil fa-2x"></i>
                 </div>
-                <p class="fs-sm fw-medium text-muted">25 bài viết</p>
+                <p class="fs-sm fw-medium text-muted">{{ $article->createdBy->articles_count }} bài viết</p>
               </div>
               <div class="col-6">
                 <div class="mb-2">
                   <i class="si si-users fa-2x"></i>
                 </div>
-                <p class="fs-sm fw-medium text-muted">1.5k người theo dõi</p>
+                <p class="fs-sm fw-medium text-muted">0 người theo dõi</p>
               </div>
             </div>
           </div>
@@ -121,15 +121,33 @@
             <h3 class="block-title">Các bài viết liên quan</h3>
           </div>
           <div class="block-content fs-sm">
+            @foreach ($relatedArticles as $rArticle)
             <div class="push">
-              <p class="fw-medium mb-1">
+              <a class="block block-rounded block-bordered block-link-shadow" href="{{ route('article.detail', ['article' => $rArticle]) }}">
+                <div class="block-content block-content-full">
+                  <div class="d-flex">
+                    @php $rAThumbnail = $rArticle->header_thumbnail ??
+                      'https://images.unsplash.com/photo-1473163928189-364b2c4e1135?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80';
+                    @endphp
+                    <img class="me-3" src="{{ $rAThumbnail }}" alt="" width="40%" height="30%">
+                    <div class="fw-semibold mb-1">{{ $rArticle->title }}</div>
+                  </div>
+                  <div>
+                    
+                    <div class="fs-sm text-muted"></div>
+                  </div>
+                  
+                </div>
+              </a>
+              {{-- <p class="fw-medium mb-1">
                 <a href="be_pages_generic_profile.html">Jesse Fisher</a> on <a href="be_pages_blog_story.html">Exploring
                   the Alps</a>
               </p>
               <p class="mb-0">
                 Awesome trip! Looking forward going there, I'm sure it will be a great experience!
-              </p>
+              </p> --}}
             </div>
+            @endforeach
             <div class="push text-sm">
               <a class="text-dark fw-semibold" href="javascript:void(0)">Xem thêm</a>
             </div>

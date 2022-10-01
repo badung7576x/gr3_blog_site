@@ -39,12 +39,12 @@ class Article extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id', 'id');
+        return $this->belongsTo(Category::class, 'category_id', 'id')->withTrashed();
     }
 
     public function createdBy()
     {
-        return $this->belongsTo(User::class, 'created_by', 'id');
+        return $this->belongsTo(User::class, 'created_by', 'id')->withCount('articles');
     }
 
     public function reviewBy()
@@ -54,7 +54,7 @@ class Article extends Model
 
     public function session()
     {
-        return $this->belongsTo(Session::class, 'session_id', 'id');
+        return $this->belongsTo(Session::class, 'session_id', 'id')->withTrashed();
     }
 
     public function comments()

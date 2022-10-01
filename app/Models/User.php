@@ -49,6 +49,16 @@ class User extends Authenticatable
         return $this->belongsTo(Group::class, 'group_id', 'id');
     }
 
+    public function articleCount()
+    {
+        return $this->belongsTo(Group::class, 'group_id', 'id');
+    }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class, 'created_by', 'id');
+    }
+
     public function password(): Attribute
     {
         return Attribute::make(

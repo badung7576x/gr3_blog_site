@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\CategoryService;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,5 +28,10 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('production')) {
             \URL::forceScheme('https');
         }
+
+        $categoryService = new CategoryService();
+
+        $categoriesForAll = $categoryService->getCategoriesWithSession();
+        View::share('categoriesForAll',$categoriesForAll);
     }
 }

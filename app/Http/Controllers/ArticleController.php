@@ -41,9 +41,8 @@ class ArticleController extends Controller
     public function home(Request $request)
     {
         $articles = $this->articleService->getAllForHomepage($request);
-        $categories = $this->categoryService->getCategoriesWithSession();
 
-        return view('public.home', compact('articles', 'categories'));
+        return view('public.home', compact('articles'));
     }
 
     public function preview(Article $article)
@@ -56,8 +55,10 @@ class ArticleController extends Controller
     public function detail(Article $article)
     {
         if (!$article->is_published && !Gate::allows('can_preview', [$article])) abort(404);
+        $article->load('createdBy');
+        $relatedArticles = $this->articleService->getRelatedArticles($article);
 
-        return view('public.detail', compact('article'));
+        return view('public.detail', compact('article', 'relatedArticles'));
     }
 
     /**

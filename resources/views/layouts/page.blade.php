@@ -244,22 +244,19 @@
         <!-- Footer Navigation -->
         <div class="row items-push fs-sm border-bottom pt-4">
           <div class="col-6 col-md-4">
-            <h3>Category</h3>
+            <h3>Danh mục bài viết</h3>
             <ul class="list list-simple-mini">
+              @foreach ($categoriesForAll as $cat)
               <li>
-                <a class="fw-semibold" href="javascript:void(0)">
-                  <i class="fa fa-fw fa-link text-primary-lighter me-1"></i> Link #1
+                <a class="fw-semibold" href="{{ route('article.home') . "?category=" . $cat->id }}">
+                  <i class="fa fa-fw fa-link text-primary-lighter me-1"></i> {{ $cat->name }}
                 </a>
               </li>
-              <li>
-                <a class="fw-semibold" href="javascript:void(0)">
-                  <i class="fa fa-fw fa-link text-primary-lighter me-1"></i> Link #2
-                </a>
-              </li>
+              @endforeach
             </ul>
           </div>
           <div class="col-md-4">
-            <h3>Category</h3>
+            {{-- <h3>Category</h3>
             <ul class="list list-simple-mini">
               <li>
                 <a class="fw-semibold" href="javascript:void(0)">
@@ -271,7 +268,7 @@
                   <i class="fa fa-fw fa-link text-primary-lighter me-1"></i> Link #2
                 </a>
               </li>
-            </ul>
+            </ul> --}}
           </div>
           <div class="col-6 col-md-4">
             {{-- <h3>Company</h3>

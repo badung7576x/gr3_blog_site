@@ -112,6 +112,12 @@
                   </li>
                 </ul>
               </li>
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.category.*') ? 'active' : '' }}" href="{{ route('admin.category.index') }}">
+                  <i class="nav-main-link-icon fa fa-list"></i>
+                  <span class="nav-main-link-name">Danh sách danh mục</span>
+                </a>
+              </li>
               <li class="nav-main-item {{ request()->routeIs('admin.user*') ? 'open' : '' }}">
                 <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
                   <i class="nav-main-link-icon fa fa-users"></i>

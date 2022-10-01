@@ -21,12 +21,29 @@ class ArticleService
     return Article::where('created_by', $currentUser->id)->latest()->get();
   }
 
+  public function getRelatedArticles(Article $article)
+  {
+    $now = Carbon::now()->toDateString();
+
+    $sessionIds = Session::where('start_time', '<=', $now)->where('end_time', '>=', $now)->pluck('id')->all();
+
+    return Article::where('is_published', true)
+      ->where('id', '!=', $article->id)
+      ->where('status', ARTICLE_ACCEPTED)
+      ->where('publish_time', '<=', $now)
+      ->where(function($query) use ($article) {
+        return $query->where('category_id', $article->category_id)
+          ->orWhere('created_by', $article->created_by);
+      })
+      ->whereIn('session_id', $sessionIds)->get();
+  }
+
   public function getAllForHomepage(Request $request)
   {
     $keyword = $request->get('keyword');
     $category = $request->get('category');
 
-    $now = Carbon::now()->format('Y-m-d H:i:s');
+    $now = Carbon::now()->toDateString();
 
     $sessionIds = Session::where('start_time', '<=', $now)->where('end_time', '>=', $now)->pluck('id')->all();
 
@@ -43,7 +60,7 @@ class ArticleService
       $query = $query->where('category_id', $category);
     }
 
-    return $query->latest()->get();
+    return $query->orderBy('publish_time', 'desc')->get();
   }
 
   public function getAllArticlesForAdmin()

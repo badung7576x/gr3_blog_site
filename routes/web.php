@@ -43,6 +43,7 @@ Route::group([
     Route::resource('articles.comments', 'CommentController')->names('comment');
     Route::resource('users', 'UserController')->names('user');
     Route::post('articles/{article}/review-update', 'ArticleController@reviewUpdate')->name('article.review-update');
+    Route::resource('categories', 'CategoryController')->names('category');
 });
 
 

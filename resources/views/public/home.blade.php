@@ -27,10 +27,10 @@
       @endif
       @if(request()->get('category'))
       @php 
-        $index = array_search(request()->get('category'), array_column($categories->toArray(), 'id'));
+        $index = array_search(request()->get('category'), array_column($categoriesForAll->toArray(), 'id'));
       @endphp
      
-      <h4 class="mt-2">Danh mục: {{ $categories[$index]->name }}</h4>
+      <h4 class="mt-2">Danh mục: {{ $categoriesForAll[$index]->name }}</h4>
       <hr class="mt-0 mb-4">
       @endif
       @forelse($articles as $article)
@@ -101,7 +101,7 @@
           </div>
           <div class="block-content fs-sm">
             <ul class="nav nav-pills flex-column push">
-              @foreach($categories as $category)
+              @foreach($categoriesForAll as $category)
               <li class="nav-item mb-1">
                 <a class="nav-link d-flex justify-start align-items-center" href="{{ route('article.home') . "?category=" . $category->id }}">
                   <i class="fa fa-chevron-right me-2"></i> {{ $category->name }}
