@@ -12,7 +12,7 @@
               <i class="fa fa-arrow-left"></i> Quay lại
           </a>
           <button type="submit" class="btn btn-sm btn-outline-success" onclick="createCategory()">
-              <i class="fa fa-plus"></i> Tạo mới
+              <i class="fa fa-save"></i> Lưu
           </button>
         </div>
       </div>
